@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#17211d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="人生系统" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>人生系统</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./assets/icon-192.png" />
+    <link rel="icon" href="./assets/icon-192.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-head">
+        <div>
+          <p class="eyebrow" id="dateLabel"></p>
+          <h1>人生系统</h1>
+        </div>
+        <button class="quiet-btn" id="notifyBtn" type="button">系统提醒</button>
+      </header>
+
+      <section class="pages" id="pages" aria-live="polite">
+        <article class="page page-goals" aria-labelledby="goalsTitle">
+          <section class="now-card">
+            <p class="small-label">此刻</p>
+            <h2 id="nowTitle">先把注意力拿回来</h2>
+            <p id="nowMessage">放下高刺激，做一个能让明天更轻松的动作。</p>
+            <button class="primary" id="coachNowBtn" type="button">我现在不想做</button>
+          </section>
+
+          <section class="panel compact-panel">
+            <div class="panel-head">
+              <h2 id="goalsTitle">我的目标</h2>
+              <div class="panel-actions">
+                <button class="text-btn" id="quickEditBtn" type="button">快速改</button>
+                <button class="icon-btn" id="addTaskBtn" type="button" aria-label="添加目标">+</button>
+              </div>
+            </div>
+            <div class="goal-list" id="taskList"></div>
+          </section>
+        </article>
+
+        <article class="page page-career" aria-labelledby="careerTitle">
+          <section class="panel career-panel">
+            <div class="panel-head">
+              <div>
+                <p class="small-label">2026暑假主线</p>
+                <h2 id="careerTitle">事业</h2>
+              </div>
+              <span class="model-pill">gpt-5.6-sol</span>
+            </div>
+            <div class="career-hero">
+              <p class="small-label" id="careerPhaseLabel">两个月计划</p>
+              <h2 id="careerTodayTitle">今天要把自己推进入场</h2>
+              <p id="careerTodaySummary">不是先学懂具身智能，而是先拿到第一段相关经历、做出可演示项目、建立机器人软件基础栈。</p>
+            </div>
+            <div class="career-score" id="careerScore"></div>
+            <div class="career-list" id="careerTodayList"></div>
+            <div class="panel-head sub-head">
+              <h2>两个月路线</h2>
+            </div>
+            <div class="career-roadmap" id="careerRoadmap"></div>
+            <div class="career-coach">
+              <p class="small-label">学习中卡住就问</p>
+              <textarea id="careerQuestion" rows="4" placeholder="比如：AI时代我还有必要手搓C语言吗？我今天ROS2环境卡住了怎么办？"></textarea>
+              <div class="review-actions">
+                <button class="quiet-btn" id="careerVoiceBtn" type="button">按住提问</button>
+                <button class="primary" id="careerAskBtn" type="button">问 gpt-5.6</button>
+              </div>
+              <p class="listen-note" id="careerListenNote">也可以说：今天完成了什么、没完成什么，我会帮你顺延到后面。</p>
+              <div class="review-result" id="careerAnswer"></div>
+            </div>
+          </section>
+        </article>
+
+        <article class="page page-urges" aria-labelledby="urgesTitle">
+          <section class="panel identity-panel">
+            <p class="small-label">发作时按住说</p>
+            <h2 id="urgeTitle">I never watch short videos.</h2>
+            <p id="urgeInstruction">按住录音键，用英文慢慢说 5 遍。不是“我要戒”，而是声明新的身份。</p>
+            <div class="rep-counter">
+              <strong id="repCount">0</strong>
+              <span>/ <span id="repTarget">5</span></span>
+            </div>
+            <button class="record-btn" id="recordBtn" type="button">按住说</button>
+            <p class="listen-note" id="listenNote">松开结束。若浏览器不支持语音识别，按住会用手动计数。</p>
+          </section>
+
+          <section class="panel compact-panel">
+            <div class="panel-head">
+              <h2 id="urgesTitle">我要远离</h2>
+              <button class="text-btn" id="resetBtn" type="button">重置</button>
+            </div>
+            <div class="avoid-list" id="avoidList"></div>
+          </section>
+        </article>
+
+        <article class="page page-coach" aria-labelledby="coachTitle">
+          <section class="panel principle-panel">
+            <div class="panel-head">
+              <h2 id="principlesTitle">原则</h2>
+              <button class="icon-btn" id="addPrincipleBtn" type="button" aria-label="添加我的原则">+</button>
+            </div>
+            <div class="principle-reader">
+              <p class="small-label" id="principleSource">今日原则</p>
+              <h2 id="principleEnglish">I face reality as it is.</h2>
+              <div class="translation-box">
+                <span>中文理解</span>
+                <p id="principleChinese">直面现实，哪怕现实并不舒服。</p>
+              </div>
+              <div class="pronunciation-tools">
+                <button class="quiet-btn" id="playPrincipleBtn" type="button">播放美式发音</button>
+                <span id="pronunciationScore">未评分</span>
+              </div>
+              <p class="word-feedback" id="wordFeedback"></p>
+              <div class="rep-counter principle-counter">
+                <strong id="principleRepCount">0</strong>
+                <span>/ <span id="principleRepTarget">3</span></span>
+              </div>
+              <button class="record-btn small-record" id="principleRecordBtn" type="button">按住读</button>
+              <p class="listen-note" id="principleListenNote">从下面选择一条原则，按住读英文。</p>
+            </div>
+            <section class="read-stats" aria-labelledby="readStatsTitle">
+              <div>
+                <p class="small-label" id="readStatsTitle">朗读统计</p>
+                <strong id="readToday">0 分钟</strong>
+                <span>今天</span>
+              </div>
+              <div>
+                <p class="small-label">累计</p>
+                <strong id="readTotal">0 分钟</strong>
+                <span id="readSessions">0 次</span>
+              </div>
+            </section>
+            <div class="recent-reads" id="recentReads"></div>
+            <div class="panel-head sub-head">
+              <h2>今日随机</h2>
+              <button class="text-btn" id="shufflePrinciplesBtn" type="button">换一组</button>
+            </div>
+            <div class="principle-list" id="principleList"></div>
+          </section>
+        </article>
+
+        <article class="page page-coach" aria-labelledby="coachTitle">
+          <section class="panel review-panel">
+            <div class="panel-head">
+              <h2>晚间复盘</h2>
+              <span class="model-pill">gpt-5.5-pro</span>
+            </div>
+            <p class="review-question" id="reviewQuestion">今天你学到了什么？做了什么？你的状态怎么样？</p>
+            <textarea id="reviewText" rows="5" placeholder="可以打字，也可以按住下面按钮口述。"></textarea>
+            <div class="review-actions">
+              <button class="quiet-btn" id="reviewRecordBtn" type="button">按住复盘</button>
+              <button class="primary" id="submitReviewBtn" type="button">提交评分</button>
+            </div>
+            <p class="listen-note" id="reviewListenNote">晚上 11 点左右，我会提醒你来这里复盘。</p>
+            <div class="review-result" id="reviewResult"></div>
+          </section>
+
+          <section class="panel coach-panel">
+            <div class="panel-head">
+              <h2 id="coachTitle">对话</h2>
+              <span class="model-pill" id="modelLabel">gpt-5.5</span>
+            </div>
+            <div class="chat-log" id="chatLog"></div>
+            <form class="chat-form" id="chatForm">
+              <textarea id="chatInput" rows="2" placeholder="比如：我很想刷短视频，帮我停下来。"></textarea>
+              <button class="primary" type="submit">发送</button>
+            </form>
+          </section>
+        </article>
+      </section>
+    </main>
+
+    <nav class="bottom-tabs" aria-label="主导航">
+      <button class="tab active" type="button" data-tab="0">目标</button>
+      <button class="tab" type="button" data-tab="1">事业</button>
+      <button class="tab" type="button" data-tab="2">戒断</button>
+      <button class="tab" type="button" data-tab="3">原则</button>
+      <button class="tab" type="button" data-tab="4">对话</button>
+    </nav>
+
+    <dialog id="taskDialog">
+      <form method="dialog" id="taskForm">
+        <h2>添加目标</h2>
+        <label>
+          <span>时间</span>
+          <input id="taskTime" type="time" required />
+        </label>
+        <label>
+          <span>目标</span>
+          <input id="taskTitle" type="text" maxlength="24" placeholder="AI 技能实操" required />
+        </label>
+        <label>
+          <span>领域</span>
+          <select id="taskCategory">
+            <option>个人成长</option>
+            <option>职业核心</option>
+            <option>英语精进</option>
+            <option>财务/副业</option>
+          </select>
+        </label>
+        <label>
+          <span>提醒语</span>
+          <textarea id="taskMessage" maxlength="140" rows="3" placeholder="到时间了。你不一定想做，但先做最小的一步。"></textarea>
+        </label>
+        <menu>
+          <button value="cancel" type="button" id="cancelDialogBtn">取消</button>
+          <button class="primary" value="default" type="submit">保存</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="quickEditDialog">
+      <form method="dialog" id="quickEditForm">
+        <h2>快速改日程</h2>
+        <label>
+          <span>说一句或写一句</span>
+          <textarea id="quickEditText" maxlength="220" rows="4" placeholder="例：把就业硬技能改到19点。新增10点投简历30分钟。今天不做上行部落。"></textarea>
+        </label>
+        <p class="form-note" id="quickEditResult">支持改时间、改时长、新增任务、今天不做、恢复默认日程。修改保存在这台手机里，刷新后仍然有效。</p>
+        <div class="review-actions">
+          <button class="quiet-btn" id="quickVoiceBtn" type="button">按住说</button>
+          <button class="primary" id="quickApplyBtn" type="button">应用修改</button>
+        </div>
+        <menu>
+          <button value="cancel" type="button" id="cancelQuickEditBtn">关闭</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="reminderDialog">
+      <form method="dialog" id="reminderForm">
+        <h2>手机系统提醒</h2>
+        <p class="form-note">同步后，提醒会由手机系统显示在锁屏和通知中心。应用没有打开、电脑关机或人在外面时，也会照常弹出。</p>
+        <div class="reminder-status" id="reminderStatus">尚未同步当前日程。</div>
+        <button class="primary" id="syncReminderBtn" type="button">同步当前日程</button>
+        <a class="quiet-btn reminder-link" id="subscribeCalendarBtn" href="#">订阅到手机日历</a>
+        <p class="form-note">iPhone：订阅后，在“日历 → 日历 → 人生系统 → ⓘ”中确认“日程提醒”已打开；系统设置里也要允许“日历”显示锁屏通知。</p>
+        <menu>
+          <button value="cancel" type="button" id="closeReminderBtn">关闭</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="principleDialog">
+      <form method="dialog" id="principleForm">
+        <h2>添加我的原则</h2>
+        <label>
+          <span>来源</span>
+          <select id="principleSourceInput">
+            <option>我的原则</option>
+            <option>Ray Dalio</option>
+          </select>
+        </label>
+        <label>
+          <span>中文原则</span>
+          <textarea id="principleImportText" maxlength="1600" rows="7" placeholder="一行一条原则。例如：\n直面现实，哪怕现实并不舒服。\n痛苦加反思等于进步。"></textarea>
+        </label>
+        <label>
+          <span>英文朗读版（可选）</span>
+          <textarea id="principleEnglishText" maxlength="1600" rows="5" placeholder="不填也可以，系统会生成英文朗读版。\n如果你填了英文，请和中文一样一行一条。"></textarea>
+        </label>
+        <p class="form-note">中文用于理解，英文用于朗读和发音评分。你自己的原则会和 Ray Dalio 原则一起随机出现。</p>
+        <menu>
+          <button value="cancel" type="button" id="cancelPrincipleBtn">取消</button>
+          <button class="primary" value="default" type="submit">保存原则</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="./ray-dalio-principles.js" defer></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
