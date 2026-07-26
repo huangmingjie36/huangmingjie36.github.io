@@ -6,17 +6,18 @@ const READ_STATS_KEY = "life-system-read-stats-v1";
 const REVIEW_KEY = "life-system-nightly-review-v1";
 const CAREER_KEY = "life-system-career-v1";
 const CALENDAR_KEY = "life-system-calendar-v1";
-const ROUTINE_VERSION = 7;
+const ROUTINE_VERSION = 8;
 const EVERYDAY = [0, 1, 2, 3, 4, 5, 6];
 const WEEKDAYS = [1, 2, 3, 4, 5];
 
 const defaultTasks = [
   ["morning-start", "07:00", "个人成长", "起床/洗漱", "10min", EVERYDAY, "每天", "7 点起床，洗脸、喝水、把手机放远。今天的主线是实习，不要一睁眼就把注意力交出去。"],
   ["eng-morning", "07:10", "英语精进", "原著阅读", "30min", EVERYDAY, "每天", "英语只维持手感：原著阅读 30 分钟。读慢一点，圈出生词，不在英语上吞掉求职主线。"],
+  ["career-skill-am", "08:00", "职业核心", "就业硬技能", "2h", EVERYDAY, "每天", "上午主工作区：具身智能硬技能。连续推进到 10:00，围绕 Linux、Python、ROS2、C/C++、项目代码或岗位 JD 补短板，必须留下笔记或提交。"],
+  ["tutor-am-prep", "10:00", "财务/副业", "出门/家教准备", "30min", EVERYDAY, "每天", "停止学习，整理教材、喝水、出门。10:30 准时开始家教，不用最后十分钟慌张切换。"],
   ["tutor-am-window", "10:30", "财务/副业", "上午家教", "2h", EVERYDAY, "每天", "固定家教 10:30-12:30。认真上课，结束后立刻回家，不在路上刷短视频。"],
-  ["career-skill-am", "10:20", "职业核心", "就业硬技能", "1.5h", EVERYDAY, "每天", "上午主工作区：具身智能硬技能。围绕 Linux、Python、ROS2、C/C++、项目代码或岗位 JD 补短板，必须留下笔记或提交。"],
-  ["growth-gym", "12:00", "个人成长", "午饭/健身", "1.5h", EVERYDAY, "每天", "12:00 吃饭，12:30-13:30 健身。吃饭和训练合计控制在 1.5 小时内，身体是求职冲刺的底层硬件。"],
-  ["growth-reset", "13:30", "个人成长", "休息/出门准备", "45min", EVERYDAY, "每天", "休息、洗漱、整理，准备 14:30 家教。休息不是刷短视频，是恢复精力。"],
+  ["growth-gym", "12:45", "个人成长", "午饭/健身", "1h15min", EVERYDAY, "每天", "12:30 下课后尽快回家，12:45 吃午饭，13:15-14:00 做紧凑训练。时间短就提高训练密度，不在组间刷手机。"],
+  ["growth-reset", "14:00", "个人成长", "收拾/出门上课", "30min", EVERYDAY, "每天", "结束训练，简单洗漱、整理教材并出门，14:30 准时开始下午家教。"],
   ["tutor-pm-window", "14:30", "财务/副业", "下午家教", "2h", EVERYDAY, "每天", "固定家教 14:30-16:30。上课结束后回家，直接接回职业主线。"],
   ["career-skill-pm", "16:50", "职业核心", "就业硬技能", "1h10min", EVERYDAY, "每天", "下午补一段专业硬技能：把上午没跑通的环境、代码、概念或项目模块继续推进到一个可见结果。"],
   ["dinner-reset", "18:00", "个人成长", "晚饭/恢复", "30min", EVERYDAY, "每天", "简单吃饭、补水、离开屏幕。晚上的 18:30-22:00 是今天最重要的职业冲刺，不要提前把脑子耗掉。"],
