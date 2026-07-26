@@ -1,5 +1,4 @@
-const CACHE_PREFIX = "life-system-";
-const CACHE_NAME = `${CACHE_PREFIX}v13`;
+const CACHE_NAME = "life-system-v12";
 const ASSETS = [
   "./",
   "./index.html",
@@ -19,11 +18,7 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(
-        keys
-          .filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME)
-          .map((key) => caches.delete(key))
-      )
+      Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
     )
   );
   self.clients.claim();
