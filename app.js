@@ -6,9 +6,20 @@ const READ_STATS_KEY = "life-system-read-stats-v1";
 const REVIEW_KEY = "life-system-nightly-review-v1";
 const CAREER_KEY = "life-system-career-v1";
 const CALENDAR_KEY = "life-system-calendar-v1";
+const JOURNEY_KEY = "duixian-180-journey-v1";
 const ROUTINE_VERSION = 9;
 const EVERYDAY = [0, 1, 2, 3, 4, 5, 6];
 const WEEKDAYS = [1, 2, 3, 4, 5];
+
+const executionTracks = [
+  ["career", "主业", "专业能力或求职"],
+  ["side", "副业", "收入与能力边界"],
+  ["product", "产品", "打磨一个真实作品"],
+  ["fitness", "健身", "训练、饮食或睡眠"],
+  ["skills", "技能", "英语、AI、编程"],
+  ["trend", "风口", "只研究，不盲目下注"],
+  ["invest", "投资", "纪律、仓位与复盘"]
+];
 
 const defaultTasks = [
   ["morning-start", "07:00", "个人成长", "起床/洗漱", "10min", EVERYDAY, "每天", "7 点起床，洗脸、喝水、把手机放远。今天的主线是实习，不要一睁眼就把注意力交出去。"],
@@ -117,40 +128,51 @@ const defaultPrinciples = [...rayDalioPrinciples, ...starterPrinciples];
 
 const careerRoadmap = [
   {
-    range: "7/17-7/24",
-    title: "启动与MVP",
-    focus: "三版简历、Linux/Git/Python/ROS2入门、turtlesim项目骨架、累计70份投递。"
+    range: "01—04 周",
+    title: "工程地基",
+    focus: "C/C++、Linux、Git、CMake。每周做一个可运行小程序，把编译、调试和版本管理练成肌肉记忆。"
   },
   {
-    range: "7/25-7/31",
-    title: "项目展示",
-    focus: "自然语言转JSON、ROS2执行节点、日志、测试、README、2分钟演示视频、累计100份投递。"
+    range: "05—08 周",
+    title: "视觉与感知",
+    focus: "OpenCV 图像处理、相机模型、YOLO 推理。交付一个能在真实视频上稳定运行的检测 Demo。"
   },
   {
-    range: "8/1-8/14",
-    title: "面试与扩展",
-    focus: "集中面试，扩展机器人测试、嵌入式测试、IoT、自动化、智能硬件、技术交付岗位。"
+    range: "09—12 周",
+    title: "ROS2 系统",
+    focus: "Node、Topic、Service、Action、TF2、Launch。把感知结果接入 ROS2，并留下架构图与演示视频。"
   },
   {
-    range: "8/15-8/31",
-    title: "落地与替代方案",
-    focus: "优先进入实习；若暂无offer，完成企业小项目/开源项目，形成可写进简历的证据。"
+    range: "13—16 周",
+    title: "定位与建图",
+    focus: "里程计、IMU、点云、SLAM 基础。跑通一个开源方案，并能解释数据流、坐标系和失败原因。"
+  },
+  {
+    range: "17—20 周",
+    title: "完整作品",
+    focus: "组合感知、决策与执行，做一个可重复演示的具身智能项目。README、测试、视频必须齐全。"
+  },
+  {
+    range: "21—24 周",
+    title: "进入行业",
+    focus: "按岗位 JD 补短板，整理简历与项目表达，持续投递、面试和迭代作品，争取真实项目或实习。"
   }
 ];
 
 const careerDailyTemplates = [
-  ["投递推进", "投递10-15份：5份高匹配、5份中匹配、2-5份挑战岗；记录岗位、渠道、状态、下一步。"],
-  ["ROS2项目", "至少1次Git提交。今天围绕自然语言命令、JSON校验、ROS2节点、日志或测试推进一个可见结果。"],
-  ["基础栈", "补Linux/Python/Git/ROS2一块最小知识。原则：跑通命令、截图/记录结果，而不是只看课。"],
-  ["面试表达", "口述30分钟：Node/Topic/Service/Action、项目数据流、失败降级、AI参与边界。"],
-  ["简历证据", "把今天的代码、投递、面试、Bug或演示整理成一句可写进简历/周报的证据。"]
+  ["核心构建", "连续做 90 分钟当前阶段项目。必须产生代码、运行结果、调试记录或演示。"],
+  ["最小技能", "围绕今天的真实卡点补一块 C/C++、Linux、OpenCV、ROS2 或 SLAM，不脱离项目刷课。"],
+  ["公开证据", "至少一次 Git 提交，或整理一页笔记、一个 README 片段、一段演示视频。"],
+  ["行业连接", "研究 3 个岗位 JD、投递 3—10 份，或联系一位从业者；记录对方真正要求的能力。"]
 ];
 
 const careerPhases = [
-  { start: "2026-07-17", end: "2026-07-24", label: "启动期", title: "先进入牌桌", summary: "今天不等准备完。核心是简历上线、投递启动、ROS2最小闭环。" },
-  { start: "2026-07-25", end: "2026-07-31", label: "展示期", title: "把项目做成能被看见的证据", summary: "完成MVP、README、架构图、演示视频和模拟面试，不继续躲在学习里。" },
-  { start: "2026-08-01", end: "2026-08-14", label: "面试期", title: "用反馈修计划", summary: "面试优先，按JD补短板；无面试就扩大到测试、交付、嵌入式、IoT和自动化。" },
-  { start: "2026-08-15", end: "2026-08-31", label: "落地期", title: "拿经历，或者制造可验证经历", summary: "真实实习优先；没有offer就做可演示项目和周报，不能让暑假空过去。" }
+  { weeks: [1, 4], label: "工程地基", title: "先跑通，再理解", summary: "今天只解决一个真实工程问题。能编译、能运行、能解释，比看完多少课重要。" },
+  { weeks: [5, 8], label: "视觉感知", title: "让机器真正看见", summary: "围绕真实图像和视频做 OpenCV 与 YOLO；输出效果、速度和失败样例。" },
+  { weeks: [9, 12], label: "ROS2 系统", title: "把模块连成系统", summary: "不背概念。用 Node、Topic、Service、Action 和 TF2 把数据流跑通。" },
+  { weeks: [13, 16], label: "定位建图", title: "理解机器人身在何处", summary: "跑通 SLAM，并能解释传感器、坐标系、漂移和失败原因。" },
+  { weeks: [17, 20], label: "完整作品", title: "做出能反复演示的作品", summary: "把感知、决策和执行组合起来；演示、测试、文档缺一不可。" },
+  { weeks: [21, 24], label: "行业落地", title: "让作品换来真实机会", summary: "按岗位反馈迭代作品、简历和表达，持续投递，不躲回无限学习。" }
 ];
 
 let state = loadState();
@@ -160,6 +182,7 @@ let principles = loadPrinciples();
 let readStats = loadReadStats();
 let reviewState = loadReviewState();
 let careerState = loadCareerState();
+let journeyState = loadJourneyState();
 let editingId = "";
 let activeTab = 0;
 let activeAvoidId = state.avoids[0]?.id || "";
@@ -188,6 +211,11 @@ const els = {
   tabs: [...document.querySelectorAll(".tab")],
   nowTitle: document.querySelector("#nowTitle"),
   nowMessage: document.querySelector("#nowMessage"),
+  journeyDay: document.querySelector("#journeyDay"),
+  journeyPercent: document.querySelector("#journeyPercent"),
+  journeyProgressBar: document.querySelector("#journeyProgressBar"),
+  trackGrid: document.querySelector("#trackGrid"),
+  trackCount: document.querySelector("#trackCount"),
   notifyBtn: document.querySelector("#notifyBtn"),
   coachNowBtn: document.querySelector("#coachNowBtn"),
   addTaskBtn: document.querySelector("#addTaskBtn"),
@@ -356,7 +384,7 @@ function updateServiceWorker() {
     window.location.reload();
   });
   navigator.serviceWorker
-    .register("./sw.js?v=20260726-3", { updateViaCache: "none" })
+    .register("./sw.js?v=20260726-4", { updateViaCache: "none" })
     .then((registration) => registration.update())
     .catch(() => {});
 }
@@ -419,6 +447,14 @@ function loadCareerState() {
   return JSON.parse(localStorage.getItem(CAREER_KEY) || '{"backlog":[]}');
 }
 
+function loadJourneyState() {
+  const saved = JSON.parse(localStorage.getItem(JOURNEY_KEY) || "null");
+  if (saved) return saved;
+  const initial = { startedOn: todayKey(), tracks: {} };
+  localStorage.setItem(JOURNEY_KEY, JSON.stringify(initial));
+  return initial;
+}
+
 function saveState() {
   state.routineVersion = ROUTINE_VERSION;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -446,6 +482,10 @@ function saveReviewState() {
 
 function saveCareerState() {
   localStorage.setItem(CAREER_KEY, JSON.stringify(careerState));
+}
+
+function saveJourneyState() {
+  localStorage.setItem(JOURNEY_KEY, JSON.stringify(journeyState));
 }
 
 function todayKey() {
@@ -480,6 +520,7 @@ function syncTabFromScroll() {
 }
 
 function render() {
+  renderJourney();
   renderTasks();
   renderCareer();
   renderAvoids();
@@ -490,6 +531,43 @@ function render() {
   renderReadStats();
   renderReview();
   updateNotifyButton();
+}
+
+function journeyDayNumber() {
+  const start = new Date(`${journeyState.startedOn || todayKey()}T00:00:00`);
+  const today = new Date(`${todayKey()}T00:00:00`);
+  return Math.max(1, Math.min(180, Math.floor((today - start) / 86400000) + 1));
+}
+
+function renderJourney() {
+  const day = journeyDayNumber();
+  const percent = Math.round((day / 180) * 100);
+  els.journeyDay.textContent = `DAY ${day} / 180`;
+  els.journeyPercent.textContent = `${percent}%`;
+  els.journeyProgressBar.style.width = `${Math.max(1, percent)}%`;
+
+  const todayTracks = journeyState.tracks?.[todayKey()] || {};
+  const checked = executionTracks.filter(([id]) => todayTracks[id]).length;
+  els.trackCount.textContent = `${checked} / ${executionTracks.length}`;
+  els.trackGrid.replaceChildren(
+    ...executionTracks.map(([id, title, note]) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `track-chip${todayTracks[id] ? " active" : ""}`;
+      button.innerHTML = `<span></span><strong></strong><small></small>`;
+      button.querySelector("span").textContent = todayTracks[id] ? "●" : "○";
+      button.querySelector("strong").textContent = title;
+      button.querySelector("small").textContent = note;
+      button.addEventListener("click", () => {
+        journeyState.tracks = journeyState.tracks || {};
+        journeyState.tracks[todayKey()] = journeyState.tracks[todayKey()] || {};
+        journeyState.tracks[todayKey()][id] = !journeyState.tracks[todayKey()][id];
+        saveJourneyState();
+        renderJourney();
+      });
+      return button;
+    })
+  );
 }
 
 function currentTask() {
@@ -554,27 +632,25 @@ function renderTasks() {
 }
 
 function careerPhaseForToday() {
-  const today = todayKey();
-  return (
-    careerPhases.find((phase) => today >= phase.start && today <= phase.end) ||
-    (today < careerPhases[0].start ? careerPhases[0] : careerPhases[careerPhases.length - 1])
-  );
+  const week = Math.max(1, Math.min(24, Math.ceil(journeyDayNumber() / 7)));
+  return careerPhases.find((phase) => week >= phase.weeks[0] && week <= phase.weeks[1]) || careerPhases[0];
 }
 
 function renderCareer() {
   if (!els.careerTodayList) return;
   const phase = careerPhaseForToday();
-  els.careerPhaseLabel.textContent = `${phase.label} / ${todayKey()}`;
+  const week = Math.max(1, Math.min(24, Math.ceil(journeyDayNumber() / 7)));
+  els.careerPhaseLabel.textContent = `第 ${week} 周 / 24 · ${phase.label}`;
   els.careerTodayTitle.textContent = phase.title;
   els.careerTodaySummary.textContent = phase.summary;
 
   const backlogToday = (careerState.backlog || []).filter((item) => item.date <= todayKey());
   const doneToday = Object.entries(careerState.done || {}).filter(([key, value]) => key.startsWith(todayKey()) && value).length;
   els.careerScore.replaceChildren(
-    careerMetric("今日硬指标", "10-15投递"),
-    careerMetric("Git提交", "至少1次"),
-    careerMetric("口述面试", "30分钟"),
-    careerMetric("已勾选", `${doneToday}项`)
+    careerMetric("深度构建", "90 分钟"),
+    careerMetric("公开证据", "至少 1 份"),
+    careerMetric("行业连接", "3 次动作"),
+    careerMetric("今日兑现", `${doneToday} / ${careerDailyTemplates.length}`)
   );
 
   const tasks = [...careerDailyTemplates];
@@ -585,17 +661,33 @@ function renderCareer() {
       const row = document.createElement("article");
       row.className = `career-task${careerState.done?.[key] ? " done" : ""}`;
       row.innerHTML = `
-        <button type="button" aria-label="完成">${careerState.done?.[key] ? "↺" : "✓"}</button>
+        <button class="evidence-submit" type="button">${careerState.done?.[key] ? "撤销" : "提交"}</button>
         <div>
           <strong></strong>
           <p></p>
+          <textarea class="evidence-input" rows="2" maxlength="240" placeholder="留下证据：Git 提交、文件名、截图说明、笔记结论或投递记录…"></textarea>
         </div>
       `;
       row.querySelector("strong").textContent = title;
       row.querySelector("p").textContent = text;
+      const evidenceInput = row.querySelector(".evidence-input");
+      evidenceInput.value = careerState.evidence?.[key] || "";
+      evidenceInput.disabled = Boolean(careerState.done?.[key]);
       row.querySelector("button").addEventListener("click", () => {
         careerState.done = careerState.done || {};
-        careerState.done[key] = !careerState.done[key];
+        careerState.evidence = careerState.evidence || {};
+        if (careerState.done[key]) {
+          careerState.done[key] = false;
+        } else {
+          const evidence = evidenceInput.value.trim();
+          if (!evidence) {
+            evidenceInput.focus();
+            evidenceInput.classList.add("needs-evidence");
+            return;
+          }
+          careerState.evidence[key] = evidence;
+          careerState.done[key] = true;
+        }
         saveCareerState();
         renderCareer();
       });
@@ -1236,7 +1328,7 @@ function downloadCalendarFile(tasks) {
       `DTSTART;TZID=Asia/Shanghai:${calendarDate(start)}`,
       `DTEND;TZID=Asia/Shanghai:${calendarDate(end)}`,
       `RRULE:FREQ=WEEKLY;BYDAY=${byDay}`,
-      `SUMMARY:${escapeCalendarText(`人生系统：${task.title}`)}`,
+      `SUMMARY:${escapeCalendarText(`兑现 180：${task.title}`)}`,
       `DESCRIPTION:${escapeCalendarText(task.message)}`,
       "BEGIN:VALARM",
       "TRIGGER:PT0M",
@@ -1252,14 +1344,14 @@ function downloadCalendarFile(tasks) {
     "PRODID:-//Mingjie Life System//ZH-CN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    "X-WR-CALNAME:人生系统",
+    "X-WR-CALNAME:兑现 180",
     ...events,
     "END:VCALENDAR"
   ].join("\r\n");
   const url = URL.createObjectURL(new Blob([content], { type: "text/calendar;charset=utf-8" }));
   const link = document.createElement("a");
   link.href = url;
-  link.download = "人生系统日程.ics";
+  link.download = "兑现180日程.ics";
   document.body.append(link);
   link.click();
   link.remove();
@@ -1313,7 +1405,7 @@ function maybeSendReviewReminder() {
 
 function showReminder(title, body) {
   if ("Notification" in window && Notification.permission === "granted") {
-    navigator.serviceWorker?.ready.then((registration) => registration.showNotification(`人生系统：${title}`, {
+    navigator.serviceWorker?.ready.then((registration) => registration.showNotification(`兑现 180：${title}`, {
       body,
       icon: "./assets/icon-192.png",
       badge: "./assets/icon-192.png",
