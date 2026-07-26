@@ -8,10 +8,10 @@
     <meta name="apple-mobile-web-app-title" content="兑现 180" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>兑现 180</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=20260726-4" />
+    <link rel="manifest" href="./manifest.webmanifest?v=20260726-5" />
     <link rel="apple-touch-icon" href="./assets/icon-192.png" />
     <link rel="icon" href="./assets/icon-192.png" />
-    <link rel="stylesheet" href="./styles.css?v=20260726-4" />
+    <link rel="stylesheet" href="./styles.css?v=20260726-5" />
   </head>
   <body>
     <main class="app-shell">
@@ -70,7 +70,7 @@
                 <p class="small-label">未来 24 周主线</p>
                 <h2 id="careerTitle">具身智能</h2>
               </div>
-              <span class="model-pill">gpt-5.6-sol</span>
+              <span class="model-pill">本地助手</span>
             </div>
             <div class="career-hero">
               <p class="small-label" id="careerPhaseLabel">第 1 周 / 24</p>
@@ -88,7 +88,7 @@
               <textarea id="careerQuestion" rows="4" placeholder="比如：AI时代我还有必要手搓C语言吗？我今天ROS2环境卡住了怎么办？"></textarea>
               <div class="review-actions">
                 <button class="quiet-btn" id="careerVoiceBtn" type="button">按住提问</button>
-                <button class="primary" id="careerAskBtn" type="button">问 gpt-5.6</button>
+                <button class="primary" id="careerAskBtn" type="button">问本地助手</button>
               </div>
               <p class="listen-note" id="careerListenNote">也可以说：今天完成了什么、没完成什么，我会帮你顺延到后面。</p>
               <div class="review-result" id="careerAnswer"></div>
@@ -168,7 +168,7 @@
           <section class="panel review-panel">
             <div class="panel-head">
               <h2>晚间复盘</h2>
-              <span class="model-pill">gpt-5.5-pro</span>
+              <span class="model-pill">本地复盘</span>
             </div>
             <p class="review-question" id="reviewQuestion">今天你学到了什么？做了什么？你的状态怎么样？</p>
             <textarea id="reviewText" rows="5" placeholder="可以打字，也可以按住下面按钮口述。"></textarea>
@@ -183,7 +183,7 @@
           <section class="panel coach-panel">
             <div class="panel-head">
               <h2 id="coachTitle">对话</h2>
-              <span class="model-pill" id="modelLabel">gpt-5.5</span>
+              <span class="model-pill" id="modelLabel">本地助手</span>
             </div>
             <div class="chat-log" id="chatLog"></div>
             <form class="chat-form" id="chatForm">
@@ -292,7 +292,7 @@
       </form>
     </dialog>
 
-    <script src="./ray-dalio-principles.js?v=20260726-4" defer></script>
-    <script src="./app.js?v=20260726-4" defer></script>
+    <script src="./ray-dalio-principles.js?v=20260726-5" defer></script>
+    <script src="./app.js?v=20260726-5" defer></script>
   </body>
 </html>

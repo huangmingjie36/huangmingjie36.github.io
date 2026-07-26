@@ -384,7 +384,7 @@ function updateServiceWorker() {
     window.location.reload();
   });
   navigator.serviceWorker
-    .register("./sw.js?v=20260726-4", { updateViaCache: "none" })
+    .register("./sw.js?v=20260726-5", { updateViaCache: "none" })
     .then((registration) => registration.update())
     .catch(() => {});
 }
@@ -723,33 +723,15 @@ async function askCareerCoach() {
     return;
   }
 
-  els.careerAnswer.textContent = "正在判断下一步...";
+  els.careerAnswer.textContent = "正在整理下一步...";
   els.careerAskBtn.disabled = true;
-  try {
-    const response = await fetch("./api/career-coach", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        message,
-        phase: careerPhaseForToday(),
-        todayTasks: careerDailyTemplates,
-        backlog: (careerState.backlog || []).slice(-10),
-        done: careerState.done || {}
-      })
-    });
-    const data = await response.json();
-    els.careerAnswer.textContent = data.reply || localCareerReply(message);
-    if (data.model) els.careerListenNote.textContent = `已回复：${data.model}`;
-  } catch {
-    els.careerAnswer.textContent = localCareerReply(message);
-    els.careerListenNote.textContent = "网络或模型接口暂时不可用，先用本地判断给你顶上。";
-  } finally {
-    maybeAddCareerBacklog(message);
-    els.careerAskBtn.disabled = false;
-    els.careerQuestion.value = "";
-    saveCareerState();
-    renderCareer();
-  }
+  els.careerAnswer.textContent = localCareerReply(message);
+  els.careerListenNote.textContent = "本地助手已回复，不需要联网或消耗 API 额度。";
+  maybeAddCareerBacklog(message);
+  els.careerAskBtn.disabled = false;
+  els.careerQuestion.value = "";
+  saveCareerState();
+  renderCareer();
 }
 
 function startCareerVoice() {
@@ -1237,17 +1219,7 @@ async function importPrinciples(event) {
 
 async function createPrincipleFromChinese(chinese, source, manualEnglish = "") {
   if (manualEnglish) return { id: makeId(), source, chinese, english: manualEnglish, target: 3 };
-  try {
-    const response = await fetch("./api/principle-english", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ chinese })
-    });
-    const data = await response.json();
-    return { id: makeId(), source, chinese, english: data.english || localPrincipleEnglish(chinese), target: 3 };
-  } catch {
-    return { id: makeId(), source, chinese, english: localPrincipleEnglish(chinese), target: 3 };
-  }
+  return { id: makeId(), source, chinese, english: localPrincipleEnglish(chinese), target: 3 };
 }
 
 function openReminderDialog() {
@@ -1572,22 +1544,8 @@ async function submitNightlyReview() {
     return;
   }
 
-  els.reviewResult.textContent = "正在评分...";
-  try {
-    const response = await fetch("./api/nightly-review", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        text,
-        goals: state.tasks.map(({ title, category, done }) => ({ title, category, done })),
-        principles: dailyPrinciples().map(({ source, chinese, english }) => ({ source, chinese, english }))
-      })
-    });
-    const data = await response.json();
-    saveReviewResult(data.review || localReviewScore(text));
-  } catch {
-    saveReviewResult(localReviewScore(text));
-  }
+  els.reviewResult.textContent = "正在本地评分...";
+  saveReviewResult(localReviewScore(text));
 }
 
 function saveReviewResult(result) {
@@ -1735,24 +1693,8 @@ async function askCoach(message, task = null) {
   els.chatInput.value = "";
   renderChat();
 
-  try {
-    const response = await fetch("./api/coach", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        message,
-        currentTask: activeTask,
-    avoidList: state.avoids.map(({ title, mantra, chineseMantra }) => ({ title, mantra, chineseMantra, active: title === activeAvoid()?.title })),
-        recentChat: chat.slice(-8)
-      })
-    });
-    const data = await response.json();
-    chat[chat.length - 1] = { role: "assistant", text: data.reply || localCoachReply(message, activeTask) };
-    els.modelLabel.textContent = data.model || "local";
-  } catch {
-    chat[chat.length - 1] = { role: "assistant", text: localCoachReply(message, activeTask) };
-    els.modelLabel.textContent = "local";
-  }
+  chat[chat.length - 1] = { role: "assistant", text: localCoachReply(message, activeTask) };
+  els.modelLabel.textContent = "本地助手";
 
   saveChat();
   renderChat();
