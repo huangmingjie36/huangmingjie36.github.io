@@ -1,11 +1,11 @@
-const CACHE_NAME = "life-system-v13";
+const CACHE_NAME = "life-system-v14";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css",
-  "./ray-dalio-principles.js",
-  "./app.js",
-  "./manifest.webmanifest",
+  "./styles.css?v=20260726-3",
+  "./ray-dalio-principles.js?v=20260726-3",
+  "./app.js?v=20260726-3",
+  "./manifest.webmanifest?v=20260726-3",
   "./assets/icon-192.png",
   "./assets/icon-512.png"
 ];

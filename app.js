@@ -6,7 +6,7 @@ const READ_STATS_KEY = "life-system-read-stats-v1";
 const REVIEW_KEY = "life-system-nightly-review-v1";
 const CAREER_KEY = "life-system-career-v1";
 const CALENDAR_KEY = "life-system-calendar-v1";
-const ROUTINE_VERSION = 8;
+const ROUTINE_VERSION = 9;
 const EVERYDAY = [0, 1, 2, 3, 4, 5, 6];
 const WEEKDAYS = [1, 2, 3, 4, 5];
 
@@ -278,7 +278,7 @@ Object.assign(els, {
 init();
 
 function init() {
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");
+  updateServiceWorker();
 
   els.dateLabel.textContent = new Intl.DateTimeFormat("zh-CN", {
     month: "long",
@@ -346,6 +346,19 @@ function init() {
   render();
   tick();
   setInterval(tick, 15000);
+}
+
+function updateServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (sessionStorage.getItem("life-system-reloading")) return;
+    sessionStorage.setItem("life-system-reloading", "1");
+    window.location.reload();
+  });
+  navigator.serviceWorker
+    .register("./sw.js?v=20260726-3", { updateViaCache: "none" })
+    .then((registration) => registration.update())
+    .catch(() => {});
 }
 
 function loadState() {
