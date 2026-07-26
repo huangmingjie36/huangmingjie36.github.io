@@ -3,22 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#17211d" />
+    <meta name="theme-color" content="#0d110f" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="人生系统" />
+    <meta name="apple-mobile-web-app-title" content="兑现 180" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>人生系统</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=20260726-3" />
+    <title>兑现 180</title>
+    <link rel="manifest" href="./manifest.webmanifest?v=20260726-4" />
     <link rel="apple-touch-icon" href="./assets/icon-192.png" />
     <link rel="icon" href="./assets/icon-192.png" />
-    <link rel="stylesheet" href="./styles.css?v=20260726-3" />
+    <link rel="stylesheet" href="./styles.css?v=20260726-4" />
   </head>
   <body>
     <main class="app-shell">
       <header class="app-head">
-        <div>
+        <div class="brand-lockup">
+          <img class="brand-mark" src="./assets/icon-192.png" alt="" />
+          <div>
           <p class="eyebrow" id="dateLabel"></p>
-          <h1>人生系统</h1>
+            <h1>兑现 180</h1>
+          </div>
         </div>
         <button class="quiet-btn" id="notifyBtn" type="button">系统提醒</button>
       </header>
@@ -26,15 +29,31 @@
       <section class="pages" id="pages" aria-live="polite">
         <article class="page page-goals" aria-labelledby="goalsTitle">
           <section class="now-card">
-            <p class="small-label">此刻</p>
+            <div class="journey-head">
+              <p class="small-label" id="journeyDay">DAY 1 / 180</p>
+              <strong id="journeyPercent">1%</strong>
+            </div>
+            <div class="journey-progress" aria-hidden="true"><span id="journeyProgressBar"></span></div>
+            <p class="small-label now-label">此刻只兑现一件事</p>
             <h2 id="nowTitle">先把注意力拿回来</h2>
             <p id="nowMessage">放下高刺激，做一个能让明天更轻松的动作。</p>
             <button class="primary" id="coachNowBtn" type="button">我现在不想做</button>
           </section>
 
+          <section class="panel track-panel">
+            <div class="panel-head">
+              <div>
+                <p class="small-label">今天留下痕迹</p>
+                <h2>七条主线</h2>
+              </div>
+              <strong class="track-count" id="trackCount">0 / 7</strong>
+            </div>
+            <div class="track-grid" id="trackGrid"></div>
+          </section>
+
           <section class="panel compact-panel">
             <div class="panel-head">
-              <h2 id="goalsTitle">我的目标</h2>
+              <h2 id="goalsTitle">今日日程</h2>
               <div class="panel-actions">
                 <button class="text-btn" id="quickEditBtn" type="button">快速改</button>
                 <button class="icon-btn" id="addTaskBtn" type="button" aria-label="添加目标">+</button>
@@ -48,20 +67,20 @@
           <section class="panel career-panel">
             <div class="panel-head">
               <div>
-                <p class="small-label">2026暑假主线</p>
-                <h2 id="careerTitle">事业</h2>
+                <p class="small-label">未来 24 周主线</p>
+                <h2 id="careerTitle">具身智能</h2>
               </div>
               <span class="model-pill">gpt-5.6-sol</span>
             </div>
             <div class="career-hero">
-              <p class="small-label" id="careerPhaseLabel">两个月计划</p>
-              <h2 id="careerTodayTitle">今天要把自己推进入场</h2>
-              <p id="careerTodaySummary">不是先学懂具身智能，而是先拿到第一段相关经历、做出可演示项目、建立机器人软件基础栈。</p>
+              <p class="small-label" id="careerPhaseLabel">第 1 周 / 24</p>
+              <h2 id="careerTodayTitle">先跑通，再理解</h2>
+              <p id="careerTodaySummary">学习不算完成，留下代码、截图、笔记、演示或投递记录才算。</p>
             </div>
             <div class="career-score" id="careerScore"></div>
             <div class="career-list" id="careerTodayList"></div>
             <div class="panel-head sub-head">
-              <h2>两个月路线</h2>
+              <h2>24 周路线</h2>
             </div>
             <div class="career-roadmap" id="careerRoadmap"></div>
             <div class="career-coach">
@@ -177,11 +196,11 @@
     </main>
 
     <nav class="bottom-tabs" aria-label="主导航">
-      <button class="tab active" type="button" data-tab="0">目标</button>
-      <button class="tab" type="button" data-tab="1">事业</button>
+      <button class="tab active" type="button" data-tab="0">今日</button>
+      <button class="tab" type="button" data-tab="1">兑现</button>
       <button class="tab" type="button" data-tab="2">戒断</button>
       <button class="tab" type="button" data-tab="3">原则</button>
-      <button class="tab" type="button" data-tab="4">对话</button>
+      <button class="tab" type="button" data-tab="4">复盘</button>
     </nav>
 
     <dialog id="taskDialog">
@@ -240,7 +259,7 @@
         <div class="reminder-status" id="reminderStatus">尚未同步当前日程。</div>
         <button class="primary" id="syncReminderBtn" type="button">同步当前日程</button>
         <a class="quiet-btn reminder-link" id="subscribeCalendarBtn" href="#">订阅到手机日历</a>
-        <p class="form-note">iPhone：订阅后，在“日历 → 日历 → 人生系统 → ⓘ”中确认“日程提醒”已打开；系统设置里也要允许“日历”显示锁屏通知。</p>
+        <p class="form-note">iPhone：订阅后，在“日历 → 日历 → 兑现 180 → ⓘ”中确认“日程提醒”已打开；系统设置里也要允许“日历”显示锁屏通知。</p>
         <menu>
           <button value="cancel" type="button" id="closeReminderBtn">关闭</button>
         </menu>
@@ -273,7 +292,7 @@
       </form>
     </dialog>
 
-    <script src="./ray-dalio-principles.js?v=20260726-3" defer></script>
-    <script src="./app.js?v=20260726-3" defer></script>
+    <script src="./ray-dalio-principles.js?v=20260726-4" defer></script>
+    <script src="./app.js?v=20260726-4" defer></script>
   </body>
 </html>
