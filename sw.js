@@ -1,13 +1,13 @@
-const CACHE_NAME = "life-system-v19";
+const CACHE_NAME = "life-system-v20";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=20260801-5",
-  "./ray-dalio-principles.js?v=20260801-5",
-  "./app.js?v=20260801-5",
-  "./manifest.webmanifest?v=20260801-5",
-  "./assets/icon-192.png",
-  "./assets/icon-512.png"
+  "./styles.css?v=20260801-6",
+  "./ray-dalio-principles.js?v=20260801-6",
+  "./app.js?v=20260801-6",
+  "./manifest.webmanifest?v=20260801-6",
+  "./assets/icon-192.png?v=2",
+  "./assets/icon-512.png?v=2"
 ];
 
 self.addEventListener("install", (event) => {
