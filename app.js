@@ -7,7 +7,7 @@ const REVIEW_KEY = "life-system-nightly-review-v1";
 const CAREER_KEY = "life-system-career-v1";
 const CALENDAR_KEY = "life-system-calendar-v1";
 const GOAL_PROGRESS_KEY = "life-system-one-goal-v1";
-const ROUTINE_VERSION = 11;
+const ROUTINE_VERSION = 12;
 const EVERYDAY = [0, 1, 2, 3, 4, 5, 6];
 const WEEKDAYS = [1, 2, 3, 4, 5];
 
@@ -15,18 +15,19 @@ const defaultTasks = [
   ["morning-start", "07:00", "个人成长", "起床/洗漱", "10min", EVERYDAY, "每天", "7 点起床，洗脸、喝水、把手机放远。今天的主线是实习，不要一睁眼就把注意力交出去。"],
   ["eng-morning", "07:10", "英语精进", "原著阅读", "30min", EVERYDAY, "每天", "英语只维持手感：原著阅读 30 分钟。读慢一点，圈出生词，不在英语上吞掉求职主线。"],
   ["morning-plan", "07:40", "个人成长", "早餐/今日计划", "20min", EVERYDAY, "每天", "吃早餐，只确认今天唯一的职业交付、两到三份目标岗位和第一个动作。不要先打开信息流。"],
-  ["career-skill-am", "08:00", "职业核心", "项目深度工作一", "2h30min", EVERYDAY, "每天", "一天最清醒的时间只做最难的职业任务：具身智能项目、Linux、Python、ROS2或C/C++。10:30前必须留下代码提交、运行结果或文档。"],
-  ["career-break-am", "10:30", "个人成长", "离屏恢复", "15min", EVERYDAY, "每天", "离开屏幕，喝水、走动、看远处。不要用短视频把下一段注意力打碎。"],
-  ["career-job-am", "10:45", "职业核心", "求职推进一", "1h15min", EVERYDAY, "每天", "分析岗位、定向修改简历并完成第一批有效投递。每次投递都写清匹配点，不进行无差别海投。"],
+  ["career-skill-am", "08:00", "职业核心", "零基础课程：看一节，跟着做", "1h30min", EVERYDAY, "每天", "打开事业页的“今天课程”，只学卡片指定的一节。每看到一个操作就暂停并在电脑上跟做，不要求一次听懂所有概念。"],
+  ["career-break-am", "09:30", "个人成长", "离屏恢复", "15min", EVERYDAY, "每天", "离开屏幕，喝水、走动、看远处。不要用短视频把刚建立的注意力打碎。"],
+  ["career-practice-am", "09:45", "职业核心", "当天小练习", "45min", EVERYDAY, "每天", "完成事业页课程卡片里的小练习，保存截图、代码文件或一段自己的解释。看完视频不算完成，做出来才算。"],
+  ["career-job-am", "10:30", "职业核心", "简历制作/修改", "1h30min", EVERYDAY, "每天", "简历没完成就只改一个明确模块；简历可投后就根据真实岗位修改顶部信息和技能顺序。不要一天反复美化整份简历。"],
   ["growth-lunch", "12:00", "个人成长", "午饭", "30min", EVERYDAY, "每天", "正常吃午饭、补水，暂时离开职业问题。12:30去训练，不躺到手机里。"],
   ["growth-gym", "12:30", "个人成长", "力量训练/体能", "1h", EVERYDAY, "每天", "完成计划内训练并记录重量、组数和次数。训练日做力量，恢复日做步行、足球、灵活性或体态。"],
   ["growth-reset", "13:30", "个人成长", "洗澡/午间恢复", "30min", EVERYDAY, "每天", "洗澡、简单整理、闭眼休息或散步。14点准时回到第二段深度工作。"],
-  ["career-skill-pm", "14:00", "职业核心", "项目深度工作二", "2h30min", EVERYDAY, "每天", "继续上午的主交付，解决一个真实卡点并推进到可演示状态。禁止用看课代替动手，结束前更新进度。"],
-  ["career-break-pm", "16:30", "个人成长", "离屏恢复", "15min", EVERYDAY, "每天", "离屏走动、吃少量水果或补水，让眼睛和大脑降下来。"],
-  ["career-interview", "16:45", "职业核心", "岗位研究/面试表达", "1h15min", EVERYDAY, "每天", "跟进岗位、拆JD、修简历或练项目讲解。每天口述15分钟，每周至少完成一次完整模拟面试。"],
+  ["career-skill-pm", "14:00", "职业核心", "练习加深/作品积累", "2h", EVERYDAY, "每天", "把上午学到的内容再独立做一遍，并整理进自己的练习文件夹。遇到不懂的词，只查眼前这个词，不扩散到一整门新课。"],
+  ["career-break-pm", "16:00", "个人成长", "离屏恢复", "15min", EVERYDAY, "每天", "离屏走动、吃少量水果或补水，让眼睛和大脑降下来。"],
+  ["career-interview", "16:15", "职业核心", "找岗位/开始投递", "1h45min", EVERYDAY, "每天", "搜索机器人测试、嵌入式测试、技术支持、交付、智能硬件等入口岗位。每天先投2-3个真实岗位，不等专业知识全部学会。"],
   ["dinner-reset", "18:00", "个人成长", "晚饭/恢复", "30min", EVERYDAY, "每天", "简单吃饭、补水、离开屏幕。晚上的 18:30-22:00 是今天最重要的职业冲刺，不要提前把脑子耗掉。"],
-  ["career-skill-night", "18:30", "职业核心", "项目交付/作品包装", "2h", EVERYDAY, "每天", "把白天成果整理成别人能看懂的证据：代码、README、测试、演示视频或项目说明。晚上不再开启没有边界的新课。"],
-  ["career-job-plan", "20:30", "职业核心", "求职推进二", "1h", EVERYDAY, "每天", "完成剩余投递、回复、跟进和投递表更新。每天总计2-3次有效投递，周目标不少于15次。"],
+  ["career-skill-night", "18:30", "职业核心", "整理今天的成果", "1h30min", EVERYDAY, "每天", "把今天的代码、截图、课程笔记或简历修改放到固定文件夹，并用三句话写清：做了什么、哪里卡住、明天第一步。"],
+  ["career-job-plan", "20:00", "职业核心", "回复公司/投递跟进", "1h30min", EVERYDAY, "每天", "回复招聘消息、记录投递状态、准备可能被问的问题。没有新消息就继续完成今天2-3次有效投递。"],
   ["growth-upward", "21:30", "个人成长", "上行部落/阅读", "40min", EVERYDAY, "每天", "上行部落或高质量阅读 40 分钟。只要一个输出：一句观点、一条行动、一个明天能用的判断。"],
   ["night-shutdown", "22:10", "个人成长", "洗澡/晚间复盘", "20min", EVERYDAY, "每天", "洗澡，做简短复盘：今天投递了多少、项目推进了什么、卡在哪里、明天第一步是什么。"],
   ["eng-night", "22:30", "英语精进", "原著阅读/口语输出", "45min", EVERYDAY, "每天", "睡前英语输入 30 分钟，再用英语口述 15 分钟。今天至少留下一个口语录音或复述结果。"],
@@ -134,14 +135,14 @@ const monthlyPlans = [
     milestones: [
       "8/5前：建立收入、支出、负债、投资四张清单；确定六首演出曲目",
       "8/10前：用岗位数据确定主职业方向和一个备选方向",
-      "8/20前：分析30份目标岗位JD，形成重复技能清单",
-      "8/31前：上线简历、GitHub主页和两个项目规划；连续训练4周"
+      "8/20前：看完30份目标岗位的招聘要求，找出反复出现的能力",
+      "8/31前：完成可投递简历、个人作品主页和两个作品规划；连续训练4周"
     ],
     weeks: [
-      ["建账与选曲", "完成四张财务清单和六首曲目清单", "分析首批10份JD并建立技能标签", "记录体重、围度、力量与形象基线"],
-      ["职业方向决策", "完成主方向与备选方向对比表", "把JD样本扩展到20份", "启动每周15次投递和一次项目讲解"],
-      ["技能清单定稿", "完成30份JD分析和技能优先级", "确定项目一的范围、验收和演示方式", "完成简历第一版并开始真实投递检验"],
-      ["公开第一批证据", "上线GitHub主页、项目规划和简历迭代版", "整理本月投递、训练、收入和社交记录", "完成一次项目讲解录像"],
+      ["建账与选曲", "完成四张财务清单和六首曲目清单", "看首批10份招聘要求并记下重复出现的能力", "记录体重、围度、力量与形象基线"],
+      ["职业方向决策", "完成主方向与备选方向对比表", "把岗位样本扩展到20份", "启动每周15次投递和一次项目讲解"],
+      ["能力清单定稿", "看完30份招聘要求并排出学习顺序", "确定第一个作品要解决什么、怎样展示", "完成简历第一版并开始真实投递检验"],
+      ["公开第一批证据", "上线个人作品主页、作品规划和简历迭代版", "整理本月投递、训练、收入和社交记录", "完成一次项目讲解录像"],
       ["八月验收", "确认方向不再随短视频和观点摇摆", "补齐八次主动交流和训练记录", "写出九月项目一的四周交付计划"]
     ]
   },
@@ -238,7 +239,7 @@ const monthlyPlans = [
 ];
 
 const weeklyMinimums = [
-  "职业主线至少40小时，其中项目或岗位技能不少于30小时",
+  "事业投入至少40小时，其中30小时用于课程跟做、练习、简历、投递或实际工作",
   "有效投递15次；项目讲解或模拟面试1次",
   "英语输入7小时，并持续口语输出",
   "力量训练4次、足球或体能1次、体态训练3次",
@@ -250,7 +251,7 @@ const careerRoadmap = [
   {
     range: "8月",
     title: "定方向与技能清单",
-    focus: "确定主攻岗位和备选岗位；分析30份JD；上线简历、GitHub主页和两个项目规划。"
+    focus: "确定主攻岗位和备选岗位；看完30份招聘要求；完成简历、个人作品主页和两个作品规划。"
   },
   {
     range: "9月",
@@ -279,16 +280,153 @@ const careerRoadmap = [
   }
 ];
 
+const courseResources = [
+  {
+    id: "python-mooc",
+    title: "Python零基础课",
+    source: "北京理工大学 · 中国大学MOOC",
+    url: "https://www.icourse163.org/course/0809BIT008-268001",
+    note: "当前主课：先学会读写最小程序。"
+  },
+  {
+    id: "ubuntu-cli",
+    title: "终端与Linux命令",
+    source: "Ubuntu官方初学教程",
+    url: "https://documentation.ubuntu.com/desktop/en/latest/tutorial/the-linux-command-line-for-beginners/",
+    note: "不要求读完，按当天卡片练命令。"
+  },
+  {
+    id: "git-book",
+    title: "Git中文教程",
+    source: "Git官方 · Pro Git",
+    url: "https://git-scm.com/book/zh/v2.html",
+    note: "只学第1章配置和第2章基础操作。"
+  },
+  {
+    id: "ros2-cli",
+    title: "ROS2入门",
+    source: "ROS2 Jazzy官方教程",
+    url: "https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools.html",
+    note: "完成前10天后再进入，不提前硬啃。"
+  },
+  {
+    id: "c-mooc",
+    title: "C语言后续课",
+    source: "浙江大学翁恺 · 中国大学MOOC",
+    url: "https://www.icourse163.org/course/detail.htm?cid=121004",
+    note: "后续阶段使用，现在不要同时开新坑。"
+  }
+];
+
+const beginnerLessons = [
+  {
+    title: "先认识终端，不写代码",
+    why: "以后安装工具、运行程序和查看报错都会用到终端。今天只需要知道它不是黑客界面，而是用文字操作文件。",
+    resource: "ubuntu-cli",
+    steps: ["在Mac上打开“终端”应用", "依次输入 pwd、ls、cd Desktop，并观察每条命令发生了什么", "建立 career-learning 文件夹，再用 ls 确认它存在"],
+    proof: "保存一张终端截图，并用自己的话写下 pwd、ls、cd 各自做什么。"
+  },
+  {
+    title: "运行第一行Python",
+    why: "Python是你进入自动化、测试和ROS2应用最容易的第一门语言。今天只建立“我能运行程序”的感觉。",
+    resource: "python-mooc",
+    steps: ["打开课程第1周：开发环境与第一个程序", "跟着运行 print('Hello, Huang Mingjie')", "把文字改成自己的三句话并再次运行"],
+    proof: "保存 first_program.py 和运行成功截图；能说出 print 是把内容显示出来。"
+  },
+  {
+    title: "让程序记住信息",
+    why: "变量就是给信息起名字。以后速度、位置、岗位名称和测试结果都要先被程序保存。",
+    resource: "python-mooc",
+    steps: ["学习变量、字符串、数字和input", "写一个程序询问姓名与今日目标", "让程序把两项信息组合后打印出来"],
+    proof: "程序能接收你的输入并输出完整句子；保存代码和一次运行结果。"
+  },
+  {
+    title: "让程序做判断",
+    why: "测试工作的本质之一，就是根据条件判断成功、失败或需要处理。",
+    resource: "python-mooc",
+    steps: ["学习 if、elif、else", "输入一个投递数量", "数量达到3时输出“完成”，否则输出“还差几个”"],
+    proof: "分别输入1和3，程序给出不同结果；能解释条件为什么会改变输出。"
+  },
+  {
+    title: "让程序重复工作",
+    why: "循环能替你处理重复任务，是自动化脚本和批量测试的基础。",
+    resource: "python-mooc",
+    steps: ["学习 for 和 range", "打印1到10", "把三个目标岗位放进列表并逐个打印"],
+    proof: "代码里有一个for循环；运行后能连续输出多个岗位名称。"
+  },
+  {
+    title: "用列表和字典整理信息",
+    why: "列表装一组东西，字典保存“名称对应内容”。这两个结构足够支撑你的第一批小工具。",
+    resource: "python-mooc",
+    steps: ["学习列表和字典", "建立一条岗位记录：公司、岗位、状态", "打印公司名并把状态改成“已投递”"],
+    proof: "保存 job_record.py；程序能打印修改后的岗位状态。"
+  },
+  {
+    title: "把重复步骤装进函数",
+    why: "函数是给一组操作起名字。项目被拆成小模块，就是为了可以分别理解、测试和修改。",
+    resource: "python-mooc",
+    steps: ["学习 def、参数和return", "写一个计算还需投递多少份的函数", "分别用目标3、已投1和已投3测试"],
+    proof: "函数被调用两次并得到正确结果；能指出输入、处理和输出。"
+  },
+  {
+    title: "读写文件和JSON",
+    why: "程序关闭后还要保留数据，就必须写入文件。JSON是很多AI接口和机器人任务使用的结构化格式。",
+    resource: "python-mooc",
+    steps: ["学习文件读写和异常的基础概念", "把一条岗位记录写入JSON文件", "重新读取并打印岗位名称"],
+    proof: "文件夹里同时存在Python文件和JSON文件；删除一处引号后能看见并恢复报错。"
+  },
+  {
+    title: "第一次用Git保存版本",
+    why: "Git不是为了炫技，而是让你知道自己改了什么，并向招聘者展示持续完成工作的证据。",
+    resource: "git-book",
+    steps: ["阅读官方书1.6配置与2.1获取仓库", "在练习文件夹运行 git init、git status", "运行 git add . 和 git commit 保存第一个版本"],
+    proof: "git log 能看到一次带说明的提交；保存截图。"
+  },
+  {
+    title: "写一份别人看得懂的README",
+    why: "招聘者通常先看说明，再决定是否看代码。README就是项目的说明书。",
+    resource: "git-book",
+    steps: ["新建README.md", "写项目用途、运行方法和今天学到的内容", "提交第二次Git版本，并比较两次记录"],
+    proof: "README至少包含三个小标题，git log能看到两次提交。"
+  },
+  {
+    title: "理解Linux，而不是立刻装一堆东西",
+    why: "机器人软件常运行在Linux上。Mac终端能练习部分相似命令，但真正的ROS2环境之后再单独配置。",
+    resource: "ubuntu-cli",
+    steps: ["阅读文件路径、目录和命令组合部分", "练习 mkdir、touch、cp、mv、cat", "画一张Mac、Linux、终端三者关系的小图"],
+    proof: "用命令创建、复制、改名并读取一个文本文件；保留命令记录。"
+  },
+  {
+    title: "先看懂机器人软件怎么分工",
+    why: "现在只建立画面：一个模块读取命令，一个模块执行，一个模块观察结果。还不需要安装ROS2。",
+    resource: "ros2-cli",
+    steps: ["只读官方教程目录和turtlesim介绍", "把Node理解为一个分工明确的小程序", "画出“命令→执行→状态”三个方框和箭头"],
+    proof: "不用术语背诵，能用送外卖或家教流程类比三个模块如何传递消息。"
+  },
+  {
+    title: "认识Node和Topic",
+    why: "Node是分工模块，Topic像持续广播的频道。先看演示，再决定环境安装。",
+    resource: "ros2-cli",
+    steps: ["阅读Introducing turtlesim、Understanding nodes、Understanding topics", "记录每页只看目标、背景和总结", "用自己的图标出谁发布、谁接收"],
+    proof: "能回答：谁在持续发送信息、谁在接收；留下手绘图或电子图。"
+  },
+  {
+    title: "14天验收与下一步选择",
+    why: "今天不继续加课，而是确认基础是否真实存在，再决定进入ROS2环境配置还是补前面的漏洞。",
+    resource: "ros2-cli",
+    steps: ["独立运行一个Python小程序", "用Git提交一次修改", "口述3分钟：终端、Python、Git分别帮你做什么", "检查简历是否可投并统计14天投递"],
+    proof: "四项证据齐全后，下一阶段才开始配置Ubuntu和ROS2；缺哪项就回到对应课程卡。"
+  }
+];
+
 const careerDailyTemplates = [
-  ["投递推进", "完成2-3次有效投递，记录岗位、渠道、匹配点、状态和下一步；每周累计不少于15次。"],
-  ["ROS2项目", "至少1次Git提交。今天围绕自然语言命令、JSON校验、ROS2节点、日志或测试推进一个可见结果。"],
-  ["基础栈", "补Linux/Python/Git/ROS2一块最小知识。原则：跑通命令、截图/记录结果，而不是只看课。"],
-  ["面试表达", "每天口述15分钟；每周至少一次完整的30分钟项目讲解或模拟面试。重点讲数据流、失败降级和AI参与边界。"],
-  ["简历证据", "把今天的代码、投递、面试、Bug或演示整理成一句可写进简历/周报的证据。"]
+  ["简历与投递", "简历未完成：今天只完成一个模块；简历可投：完成2-3次真实投递并记录状态。"],
+  ["今天的零基础课", "严格按事业页当前课程卡学习，不同时开启C、C++、ROS2和深度学习。"],
+  ["留下一个看得见的结果", "保存代码、截图、README、投递记录或口述录音。只看完课程不算完成。"]
 ];
 
 const careerPhases = [
-  { start: "2026-08-01", end: "2026-08-31", label: "定向期", title: "先确定打哪一场仗", summary: "用30份JD决定主攻岗位和备选岗位，上线简历、GitHub主页与项目规划。" },
+  { start: "2026-08-01", end: "2026-08-31", label: "定向期", title: "先确定打哪一场仗", summary: "用30份招聘要求决定主攻岗位和备选岗位，完成简历、个人作品主页与作品规划。" },
   { start: "2026-09-01", end: "2026-09-30", label: "项目一期", title: "做出第一个能展示的证据", summary: "完成项目一、README和演示视频；累计完成30次有效投递。" },
   { start: "2026-10-01", end: "2026-10-31", label: "项目二期", title: "让第二个项目超过半程", summary: "项目二完成50%以上，累计投递60次，用岗位反馈决定补什么。" },
   { start: "2026-11-01", end: "2026-11-30", label: "面试期", title: "完成项目，集中赢得机会", summary: "11月15日前完成项目二，月底前获得实习或进入最终招聘阶段。" },
@@ -410,6 +548,8 @@ Object.assign(els, {
 });
 
 Object.assign(els, {
+  careerModeButtons: [...document.querySelectorAll("[data-career-mode]")],
+  openInternshipConfigBtn: document.querySelector("#openInternshipConfigBtn"),
   careerPhaseLabel: document.querySelector("#careerPhaseLabel"),
   careerTodayTitle: document.querySelector("#careerTodayTitle"),
   careerTodaySummary: document.querySelector("#careerTodaySummary"),
@@ -420,7 +560,29 @@ Object.assign(els, {
   careerVoiceBtn: document.querySelector("#careerVoiceBtn"),
   careerAskBtn: document.querySelector("#careerAskBtn"),
   careerListenNote: document.querySelector("#careerListenNote"),
-  careerAnswer: document.querySelector("#careerAnswer")
+  careerAnswer: document.querySelector("#careerAnswer"),
+  careerLessonCard: document.querySelector("#careerLessonCard"),
+  lessonDay: document.querySelector("#lessonDay"),
+  lessonTitle: document.querySelector("#lessonTitle"),
+  lessonWhy: document.querySelector("#lessonWhy"),
+  lessonSteps: document.querySelector("#lessonSteps"),
+  lessonProof: document.querySelector("#lessonProof"),
+  lessonLink: document.querySelector("#lessonLink"),
+  completeLessonBtn: document.querySelector("#completeLessonBtn"),
+  courseShelf: document.querySelector("#courseShelf"),
+  courseLinks: document.querySelector("#courseLinks"),
+  openBeginnerRoadmapBtn: document.querySelector("#openBeginnerRoadmapBtn"),
+  beginnerRoadmapDialog: document.querySelector("#beginnerRoadmapDialog"),
+  closeBeginnerRoadmapBtn: document.querySelector("#closeBeginnerRoadmapBtn"),
+  beginnerRoadmapList: document.querySelector("#beginnerRoadmapList"),
+  internshipConfigDialog: document.querySelector("#internshipConfigDialog"),
+  internshipConfigForm: document.querySelector("#internshipConfigForm"),
+  internshipStart: document.querySelector("#internshipStart"),
+  internshipEnd: document.querySelector("#internshipEnd"),
+  internshipCommute: document.querySelector("#internshipCommute"),
+  internshipDays: document.querySelector("#internshipDays"),
+  cancelInternshipConfigBtn: document.querySelector("#cancelInternshipConfigBtn"),
+  usePrepModeBtn: document.querySelector("#usePrepModeBtn")
 });
 
 Object.assign(els, {
@@ -497,6 +659,14 @@ function init() {
   els.reviewRecordBtn.addEventListener("contextmenu", (event) => event.preventDefault());
   els.submitReviewBtn.addEventListener("click", submitNightlyReview);
   els.careerAskBtn.addEventListener("click", askCareerCoach);
+  els.careerModeButtons.forEach((button) => button.addEventListener("click", () => selectCareerMode(button.dataset.careerMode)));
+  els.openInternshipConfigBtn.addEventListener("click", openInternshipConfig);
+  els.internshipConfigForm.addEventListener("submit", saveInternshipConfig);
+  els.cancelInternshipConfigBtn.addEventListener("click", () => els.internshipConfigDialog.close());
+  els.usePrepModeBtn.addEventListener("click", usePreparationMode);
+  els.openBeginnerRoadmapBtn.addEventListener("click", () => els.beginnerRoadmapDialog.showModal());
+  els.closeBeginnerRoadmapBtn.addEventListener("click", () => els.beginnerRoadmapDialog.close());
+  els.completeLessonBtn.addEventListener("click", completeCurrentLesson);
   els.careerVoiceBtn.addEventListener("pointerdown", startCareerVoice);
   els.careerVoiceBtn.addEventListener("pointerup", stopCareerVoice);
   els.careerVoiceBtn.addEventListener("pointerleave", stopCareerVoice);
@@ -515,7 +685,7 @@ function updateServiceWorker() {
     window.location.reload();
   });
   navigator.serviceWorker
-    .register("./sw.js?v=20260801-2", { updateViaCache: "none" })
+    .register("./sw.js?v=20260801-3", { updateViaCache: "none" })
     .then((registration) => registration.update())
     .catch(() => {});
 }
@@ -575,7 +745,14 @@ function loadReviewState() {
 }
 
 function loadCareerState() {
-  return JSON.parse(localStorage.getItem(CAREER_KEY) || '{"backlog":[]}');
+  const saved = JSON.parse(localStorage.getItem(CAREER_KEY) || "null") || {};
+  return {
+    backlog: [],
+    mode: "prep",
+    lessonIndex: 0,
+    internshipConfig: { start: "09:00", end: "18:00", commute: 30, days: "weekdays" },
+    ...saved
+  };
 }
 
 function loadGoalProgress() {
@@ -708,7 +885,7 @@ function dailyEvidence(date = new Date()) {
 
   return [
     { id: "sprint", title: "本周节点", text: sprintItem },
-    { id: "career-proof", title: "职业证据", text: "完成至少6小时项目或岗位技能工作，并留下Git提交、文档、演示或面试答案。" },
+    { id: "career-proof", title: "事业完成证据", text: "完成至少6小时事业推进：课程跟做、练习、简历、投递或实际工作；留下截图、代码、简历版本或投递记录。" },
     { id: "applications", title: applicationTask[0], text: applicationTask[1] },
     { id: "english", title: "英语输入与输出", text: "完成45分钟高质量输入和15分钟口语输出，留下复述或录音。" },
     { id: "body", title: "身体记录", text: "训练日记录重量、组数和次数；休息日记录体重并完成10分钟体态训练。" },
@@ -849,23 +1026,61 @@ function careerPhaseForToday() {
   );
 }
 
+function currentBeginnerLesson() {
+  const index = Math.max(0, Math.min(beginnerLessons.length - 1, Number(careerState.lessonIndex) || 0));
+  return { ...beginnerLessons[index], index };
+}
+
+function careerTasksForToday() {
+  if (careerState.mode === "internship") {
+    const config = careerState.internshipConfig || {};
+    const workDays = config.days === "everyday" ? EVERYDAY : config.days === "six-days" ? [1, 2, 3, 4, 5, 6] : WEEKDAYS;
+    if (!workDays.includes(new Date().getDay())) {
+      return [
+        ["整理本周实习证据", "写清本周完成的任务、遇到的问题、解决过程和结果，不记录公司机密。"],
+        ["推进长期技能或个人项目", "只推进一个明确模块，留下代码、文档或运行结果。"],
+        ["准备下周", "确认下周最重要的公司任务、一个知识缺口和一条可以更新的简历素材。"]
+      ];
+    }
+    return [
+      ["先把公司的任务做完", "先确认导师今天要的结果、截止时间和验收方式。工作时间不偷偷学一堆无关课程。"],
+      ["记录一个问题闭环", "写下现象、如何复现、看了什么信息、怎么解决、最后如何确认。不能带走公司代码和机密。"],
+      ["只补今天遇到的知识", "下班后用45分钟补一个真实知识缺口，并把它写成以后面试能讲的案例。"]
+    ];
+  }
+
+  const lesson = currentBeginnerLesson();
+  return [
+    ["简历和投递", "简历没完成就只完成一个模块；简历已可投就投2-3个真实岗位，并记录公司、岗位和下一步。"],
+    [lesson.title, lesson.steps.join("；")],
+    ["保存今天的完成证据", lesson.proof]
+  ];
+}
+
 function renderCareer() {
   if (!els.careerTodayList) return;
+  const internshipMode = careerState.mode === "internship";
   const phase = careerPhaseForToday();
-  els.careerPhaseLabel.textContent = `${phase.label} / ${todayKey()}`;
-  els.careerTodayTitle.textContent = phase.title;
-  els.careerTodaySummary.textContent = phase.summary;
+  const lesson = currentBeginnerLesson();
+  els.careerModeButtons.forEach((button) => button.classList.toggle("active", button.dataset.careerMode === careerState.mode));
+
+  if (internshipMode) {
+    els.careerPhaseLabel.textContent = `实习适应期 / ${todayKey()}`;
+    els.careerTodayTitle.textContent = "先在真实工作里完成一个闭环";
+    els.careerTodaySummary.textContent = "公司任务优先。每天只补工作中真实遇到的一个知识缺口，并把问题过程沉淀成以后能讲的经历。";
+  } else {
+    els.careerPhaseLabel.textContent = `零基础第 ${lesson.index + 1} 天 / ${todayKey()}`;
+    els.careerTodayTitle.textContent = lesson.title;
+    els.careerTodaySummary.textContent = "你今天不需要看懂整个具身智能。完成下面三件事，就算向实习更近了一步。";
+  }
 
   const backlogToday = (careerState.backlog || []).filter((item) => item.date <= todayKey());
   const doneToday = Object.entries(careerState.done || {}).filter(([key, value]) => key.startsWith(todayKey()) && value).length;
-  els.careerScore.replaceChildren(
-    careerMetric("本周投递", "至少15次"),
-    careerMetric("Git提交", "至少1次"),
-    careerMetric("项目讲解", "每周1次"),
-    careerMetric("已勾选", `${doneToday}项`)
-  );
+  els.careerScore.replaceChildren(...(internshipMode
+    ? [careerMetric("当前阶段", "已经实习"), careerMetric("工作闭环", "每天1个"), careerMetric("定向补课", "45分钟"), careerMetric("已勾选", `${doneToday}项`)]
+    : [careerMetric("当前课程", `${lesson.index + 1} / ${beginnerLessons.length}天`), careerMetric("简历", "每天1块"), careerMetric("有效投递", "每天2-3次"), careerMetric("已勾选", `${doneToday}项`)]));
 
-  const tasks = [...careerDailyTemplates];
+  const tasks = careerTasksForToday();
   backlogToday.forEach((item) => tasks.unshift(["顺延任务", `${item.text}（${item.from || "复盘顺延"}）`]));
   els.careerTodayList.replaceChildren(
     ...tasks.map(([title, text], index) => {
@@ -891,8 +1106,19 @@ function renderCareer() {
     })
   );
 
+  renderBeginnerLesson(internshipMode);
+
   els.careerRoadmap.replaceChildren(
-    ...careerRoadmap.map((item) => {
+    ...(internshipMode ? [
+      { range: "每天", title: "完成公司任务", focus: "先问清结果和验收标准，把分配的小任务做到可以检查。" },
+      { range: "每晚", title: "补一个真实缺口", focus: "只学当天工作里出现的知识，不另开宏大课程。" },
+      { range: "每周", title: "形成一页周报", focus: "记录任务、问题、解决方法、结果和下一步，沉淀简历素材。" }
+    ] : [
+      { range: "第1-8天", title: "先会运行最小程序", focus: "终端、Python、文件和JSON；每天都留下代码或截图。" },
+      { range: "第9-14天", title: "学会保存版本，再认识ROS2", focus: "Git、README、Linux概念、Node和Topic；暂不碰SLAM和大模型。" },
+      { range: "下一阶段", title: "配置Ubuntu和ROS2", focus: "在有人协助排错的情况下完成环境，再开始turtlesim小项目。" },
+      { range: "全程并行", title: "简历和投递不能停", focus: "先投测试、交付、技术支持和智能硬件入口岗位，用真实反馈修方向。" }
+    ]).map((item) => {
       const row = document.createElement("article");
       row.className = "roadmap-row";
       row.innerHTML = `<span></span><div><strong></strong><p></p></div>`;
@@ -902,6 +1128,184 @@ function renderCareer() {
       return row;
     })
   );
+}
+
+function renderBeginnerLesson(hidden) {
+  els.careerLessonCard.hidden = hidden;
+  els.courseShelf.hidden = hidden;
+  if (hidden) return;
+
+  const lesson = currentBeginnerLesson();
+  const resource = courseResources.find((item) => item.id === lesson.resource);
+  els.lessonDay.textContent = `第 ${lesson.index + 1} / ${beginnerLessons.length} 天`;
+  els.lessonTitle.textContent = lesson.title;
+  els.lessonWhy.textContent = lesson.why;
+  els.lessonSteps.replaceChildren(...lesson.steps.map((step) => {
+    const item = document.createElement("li");
+    item.textContent = step;
+    return item;
+  }));
+  els.lessonProof.textContent = lesson.proof;
+  els.lessonLink.href = resource.url;
+  els.lessonLink.textContent = `打开：${resource.title}`;
+  els.completeLessonBtn.textContent = lesson.index === beginnerLessons.length - 1 ? "完成14天验收" : "完成，进入下一天";
+
+  els.courseLinks.replaceChildren(...courseResources.map((item) => {
+    const link = document.createElement("a");
+    link.className = `course-link${item.id === lesson.resource ? " current" : ""}`;
+    link.href = item.url;
+    link.target = "_blank";
+    link.rel = "noreferrer";
+    link.innerHTML = `<div><strong></strong><span></span></div><p></p>`;
+    link.querySelector("strong").textContent = item.title;
+    link.querySelector("span").textContent = item.source;
+    link.querySelector("p").textContent = item.note;
+    return link;
+  }));
+
+  els.beginnerRoadmapList.replaceChildren(...beginnerLessons.map((item, index) => {
+    const row = document.createElement("article");
+    row.className = `beginner-roadmap-row${index === lesson.index ? " current" : ""}${index < lesson.index ? " done" : ""}`;
+    row.innerHTML = `<span></span><div><strong></strong><p></p></div>`;
+    row.querySelector("span").textContent = index < lesson.index ? "✓" : `${index + 1}`;
+    row.querySelector("strong").textContent = item.title;
+    row.querySelector("p").textContent = item.proof;
+    return row;
+  }));
+}
+
+function completeCurrentLesson() {
+  const current = currentBeginnerLesson();
+  careerState.lessonCompleted = careerState.lessonCompleted || {};
+  careerState.lessonCompleted[current.index] = todayKey();
+  if (current.index < beginnerLessons.length - 1) careerState.lessonIndex = current.index + 1;
+  saveCareerState();
+  renderCareer();
+}
+
+function selectCareerMode(mode) {
+  if (mode === "internship") {
+    openInternshipConfig();
+    return;
+  }
+  usePreparationMode();
+}
+
+function openInternshipConfig() {
+  const config = careerState.internshipConfig || {};
+  els.internshipStart.value = config.start || "09:00";
+  els.internshipEnd.value = config.end || "18:00";
+  els.internshipCommute.value = Number(config.commute) || 30;
+  els.internshipDays.value = config.days || "weekdays";
+  els.internshipConfigDialog.showModal();
+}
+
+function usePreparationMode() {
+  careerState.mode = "prep";
+  replaceCareerRoutine(defaultTasks);
+  saveCareerState();
+  if (els.internshipConfigDialog.open) els.internshipConfigDialog.close();
+  render();
+}
+
+function saveInternshipConfig(event) {
+  event.preventDefault();
+  const start = els.internshipStart.value;
+  const end = els.internshipEnd.value;
+  if (minutesFromTime(end) <= minutesFromTime(start)) {
+    els.internshipEnd.setCustomValidity("下班时间必须晚于上班时间");
+    els.internshipEnd.reportValidity();
+    return;
+  }
+  els.internshipEnd.setCustomValidity("");
+  const config = {
+    start,
+    end,
+    commute: Math.max(0, Math.min(180, Number(els.internshipCommute.value) || 0)),
+    days: els.internshipDays.value
+  };
+  careerState.mode = "internship";
+  careerState.internshipConfig = config;
+  replaceCareerRoutine(internshipTasksForConfig(config));
+  saveCareerState();
+  els.internshipConfigDialog.close();
+  render();
+}
+
+function replaceCareerRoutine(nextTasks) {
+  const builtInIds = new Set([...defaultTasks.map((task) => task.id), ...internshipTaskIds()]);
+  const customTasks = (state.tasks || []).filter((task) => {
+    const key = `${task.category}:${task.title}`;
+    return !builtInIds.has(task.id) && !legacyDefaultTaskKeys.has(key);
+  });
+  state.tasks = [...nextTasks.map((task) => ({ ...task, days: [...task.days], done: false, notifiedOn: "" })), ...customTasks];
+  saveState();
+}
+
+function internshipTaskIds() {
+  return ["intern-wake", "intern-english", "intern-depart", "intern-work", "intern-return", "intern-dinner", "intern-review", "intern-study", "intern-shutdown", "intern-sleep", "intern-week-review", "intern-week-project", "intern-week-plan"];
+}
+
+function internshipTasksForConfig(config) {
+  const workDays = config.days === "everyday" ? EVERYDAY : config.days === "six-days" ? [1, 2, 3, 4, 5, 6] : WEEKDAYS;
+  const restDays = config.days === "everyday" ? [] : config.days === "six-days" ? [0] : [0, 6];
+  const start = minutesFromTime(config.start);
+  const end = minutesFromTime(config.end);
+  const commute = Number(config.commute) || 0;
+  const depart = start - commute;
+  const arriveHome = end + commute;
+  const wake = Math.max(330, Math.min(420, depart - 60));
+  const review = arriveHome + 30;
+  const study = review + 45;
+  const sleep = Math.max(1410, study + 75);
+  const daysLabel = config.days === "everyday" ? "每天" : config.days === "six-days" ? "周一至周六" : "周一至周五";
+  const makeTask = (id, time, category, title, duration, message, days = workDays, label = daysLabel) => ({
+    id,
+    time: timeFromMinutes(time),
+    category,
+    title,
+    duration,
+    days,
+    daysLabel: label,
+    message,
+    done: false,
+    enabled: true,
+    notifiedOn: ""
+  });
+
+  const tasks = [
+    makeTask("intern-wake", wake, "个人成长", "起床/洗漱", "10min", "今天先把公司的真实任务做好。不要一睁眼就查看信息流。"),
+    makeTask("intern-english", wake + 10, "英语精进", "英语维持", "30min", "阅读或听力30分钟即可，实习期不让英语挤占工作交付。"),
+    makeTask("intern-depart", depart, "个人成长", "出门上班", `${commute}min`, "带齐电脑和需要的物品，提前到达。通勤不刷短视频。"),
+    makeTask("intern-work", start, "职业核心", "实习工作", durationFromMinutes(end - start), "先问清今天的结果、截止时间和验收方式。把一个小任务完整做完，比偷偷学很多课重要。"),
+    makeTask("intern-return", end, "个人成长", "下班/通勤", `${commute}min`, "离开前记录今天做到哪里、剩余问题和明天第一步。"),
+    makeTask("intern-dinner", arriveHome, "个人成长", "晚饭/恢复", "30min", "先吃饭和恢复，不带着工作焦虑直接开新课程。"),
+    makeTask("intern-review", review, "职业核心", "实习问题日志", "45min", "记录一个真实问题：现象、复现、判断、行动、结果。不要记录公司机密。"),
+    makeTask("intern-study", study, "职业核心", "定向补一个知识缺口", "45min", "只补今天工作中遇到的一个知识点，学完写成三句话，不扩散到整门新课。"),
+    makeTask("intern-shutdown", study + 45, "个人成长", "洗澡/收束", "30min", "停止工作，洗澡并准备睡觉。实习期持续稳定比某一天熬夜更重要。"),
+    makeTask("intern-sleep", sleep, "个人成长", "睡觉", "固定", "保证睡眠，明天才能继续在真实工作里积累可信证据。")
+  ];
+  if (restDays.length) {
+    const restLabel = restDays.length === 2 ? "周末" : "周日";
+    tasks.push(
+      makeTask("intern-week-review", 480, "职业核心", "本周实习复盘", "1h", "整理本周完成的任务、遇到的问题和可以写进简历的证据。", restDays, restLabel),
+      makeTask("intern-week-project", 555, "职业核心", "长期技能/个人项目", "2h", "继续长期主线，只推进一个明确模块，不追求把整套知识学完。", restDays, restLabel),
+      makeTask("intern-week-plan", 840, "职业核心", "简历素材/下周准备", "1h", "更新一条简历素材，确认下周最重要的公司任务和一个知识缺口。", restDays, restLabel)
+    );
+  }
+  return tasks;
+}
+
+function timeFromMinutes(total) {
+  const normalized = ((Math.round(total) % 1440) + 1440) % 1440;
+  return `${String(Math.floor(normalized / 60)).padStart(2, "0")}:${String(normalized % 60).padStart(2, "0")}`;
+}
+
+function durationFromMinutes(total) {
+  const hours = Math.floor(total / 60);
+  const minutes = total % 60;
+  if (!hours) return `${minutes}min`;
+  return minutes ? `${hours}h${minutes}min` : `${hours}h`;
 }
 
 function careerMetric(label, value) {
@@ -927,8 +1331,9 @@ async function askCareerCoach() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         message,
-        phase: careerPhaseForToday(),
-        todayTasks: careerDailyTemplates,
+        phase: careerState.mode === "internship" ? { label: "实习适应期" } : { label: `零基础第${currentBeginnerLesson().index + 1}天` },
+        todayTasks: careerTasksForToday(),
+        currentLesson: careerState.mode === "prep" ? currentBeginnerLesson() : null,
         backlog: (careerState.backlog || []).slice(-10),
         done: careerState.done || {}
       })
@@ -1979,16 +2384,17 @@ function localReviewScore(text) {
 
 function localCareerReply(message) {
   if (/C语言|手搓|代码/.test(message)) {
-    return "结论：AI时代仍然要会手搓最小代码，但目标不是当苦力，而是建立判断力。你至少要能看懂变量、指针、结构体、函数、编译报错和基本调试。学习方式别刷课：每天写一个很小的程序，用AI解释，再自己改坏一次、修回来一次。这样你不是背C语言，而是在训练工程直觉。";
+    return "你现在不用同时学C和Python。先按14天路线把Python最小程序、文件和Git走通；之后再进入C语言。所谓手写代码，不是闭眼背，而是你能运行一个很小的程序、改一处、看懂结果，并解释它做了什么。今天只完成当前课程卡。";
   }
   if (/ROS|ros|节点|Topic|Service|Action|turtlesim/.test(message)) {
-    return "先别把ROS2想成巨大知识体系。今天只抓一条线：一个节点发布命令，另一个节点接收状态，你能画出数据流并跑通demo，就已经比空看教程强。卡住时记录：命令、报错、你试过什么、下一步假设。工程能力就是这样长出来的。";
+    return "你现在看不懂ROS2很正常，因为终端、Python、Git这些前置台阶还没搭好。先完成事业页当前课程；第12天才开始用生活类比认识ROS2，第14天验收通过后再配置环境。现在不要安装一堆东西。";
   }
   if (/简历|投递|实习|岗位|面试/.test(message)) {
-    return "你现在最该避免的是“学够了再投”。现实是：投递会反过来告诉你缺什么。今天至少投10份，岗位可以分三层：高匹配、中匹配、挑战岗。每份不是碰运气，而是收集市场反馈。投递、项目、面试表达要同步推进。";
+    return "不要等学完再投。简历还没完成，就在今天只补一个模块；已经能投，就投2-3个机器人测试、嵌入式测试、技术支持、交付或智能硬件入口岗位。每投一次都记录公司、岗位、回复和下一步，真实反馈会告诉我们该补什么。";
   }
   if (/没做|未完成|没完成|卡住|做不完|拖延/.test(message)) {
     return "事实：没完成不是世界末日，但如果不复盘，它会变成惯性。现在只问三个问题：卡在环境、知识、情绪，还是任务太大？把未完成内容切成明天第一个25分钟能启动的动作。我已经先帮你顺延，明天不要重新谈理想，直接处理这个缺口。";
   }
-  return "结论：具身智能这条路现在别幻想一步到核心算法。你更现实的入场身份是机器人系统工程型候选人：Linux、Git、Python、ROS2、项目演示、投递和面试表达。今天最重要的是制造证据：一条提交、一批投递、一段能讲清楚的项目解释。";
+  const lesson = currentBeginnerLesson();
+  return `先不要处理整个“具身智能”。你今天只做三件事：简历或投递、课程卡「${lesson.title}」、保存一个完成证据。不懂的词只问当前这一步，别让一个名词把你拖进另一门课。`;
 }

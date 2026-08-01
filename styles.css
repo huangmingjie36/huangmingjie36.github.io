@@ -350,6 +350,30 @@ h1 {
   gap: 10px;
 }
 
+.career-mode {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #eef3f0;
+}
+
+.career-mode button {
+  min-height: 40px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.career-mode button.active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(23, 33, 29, 0.08);
+}
+
 .career-hero {
   padding: 13px;
   border: 1px solid #dce8e1;
@@ -459,6 +483,184 @@ h1 {
   display: grid;
   gap: 8px;
   margin-top: 2px;
+}
+
+.lesson-card {
+  display: grid;
+  gap: 11px;
+  margin: 4px -14px;
+  padding: 16px 14px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #f7faf8;
+}
+
+.lesson-topline,
+.lesson-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.lesson-topline > span {
+  color: var(--green);
+  font-size: 0.78rem;
+  font-weight: 950;
+}
+
+.lesson-card h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.lesson-why {
+  margin: 0;
+  color: #39443f;
+  line-height: 1.5;
+}
+
+.lesson-card ol {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 22px;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.lesson-proof {
+  padding: 11px 12px;
+  border-left: 4px solid var(--amber);
+  background: #fff7e9;
+}
+
+.lesson-proof span {
+  display: block;
+  margin-bottom: 4px;
+  color: #865a1d;
+  font-size: 0.75rem;
+  font-weight: 950;
+}
+
+.lesson-proof strong {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.lesson-actions {
+  align-items: stretch;
+}
+
+.lesson-actions > * {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.course-shelf {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.course-shelf summary {
+  padding: 12px 2px;
+  color: var(--ink);
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.course-shelf summary span {
+  float: right;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+#courseLinks {
+  display: grid;
+  gap: 7px;
+  padding-bottom: 10px;
+}
+
+.course-link {
+  display: grid;
+  gap: 5px;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.course-link.current {
+  border-color: rgba(47, 125, 87, 0.55);
+  background: #f1f8f4;
+}
+
+.course-link strong,
+.course-link span {
+  display: block;
+}
+
+.course-link span,
+.course-link p {
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.38;
+}
+
+.course-link p {
+  margin: 0;
+}
+
+.beginner-roadmap-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.beginner-roadmap-row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 9px;
+  padding: 10px;
+  border-left: 3px solid var(--line);
+  background: #f7faf8;
+}
+
+.beginner-roadmap-row.current {
+  border-left-color: var(--amber);
+  background: #fff7e9;
+}
+
+.beginner-roadmap-row.done {
+  opacity: 0.6;
+}
+
+.beginner-roadmap-row > span {
+  color: var(--green);
+  font-weight: 950;
+  text-align: center;
+}
+
+.beginner-roadmap-row strong {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.beginner-roadmap-row p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
 }
 
 .goal-row,
@@ -1023,6 +1225,7 @@ textarea {
 
 menu {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   gap: 10px;
   margin: 4px 0 0;

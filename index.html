@@ -8,10 +8,10 @@
     <meta name="apple-mobile-web-app-title" content="人生系统" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>人生系统</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=20260801-2" />
+    <link rel="manifest" href="./manifest.webmanifest?v=20260801-3" />
     <link rel="apple-touch-icon" href="./assets/icon-192.png" />
     <link rel="icon" href="./assets/icon-192.png" />
-    <link rel="stylesheet" href="./styles.css?v=20260801-2" />
+    <link rel="stylesheet" href="./styles.css?v=20260801-3" />
   </head>
   <body>
     <main class="app-shell">
@@ -79,20 +79,50 @@
           <section class="panel career-panel">
             <div class="panel-head">
               <div>
-                <p class="small-label">2026.08—2027.01 职业主线</p>
+                <p class="small-label">先看得懂，再做得出来</p>
                 <h2 id="careerTitle">事业</h2>
               </div>
-              <span class="model-pill">gpt-5.6-sol</span>
+              <button class="text-btn" id="openInternshipConfigBtn" type="button">阶段设置</button>
+            </div>
+            <div class="career-mode" aria-label="当前事业阶段">
+              <button class="active" type="button" data-career-mode="prep">求职准备期</button>
+              <button type="button" data-career-mode="internship">已经实习</button>
             </div>
             <div class="career-hero">
-              <p class="small-label" id="careerPhaseLabel">两个月计划</p>
-              <h2 id="careerTodayTitle">今天要把自己推进入场</h2>
-              <p id="careerTodaySummary">不是先学懂具身智能，而是先拿到第一段相关经历、做出可演示项目、建立机器人软件基础栈。</p>
+              <p class="small-label" id="careerPhaseLabel">零基础第1步</p>
+              <h2 id="careerTodayTitle">今天只解决眼前的一小步</h2>
+              <p id="careerTodaySummary">你不需要先听懂所有专业词。应用会告诉你打开哪里、学哪一节、做出什么。</p>
             </div>
             <div class="career-score" id="careerScore"></div>
-            <div class="career-list" id="careerTodayList"></div>
             <div class="panel-head sub-head">
-              <h2>六个月路线</h2>
+              <h2>今天只做三件事</h2>
+            </div>
+            <div class="career-list" id="careerTodayList"></div>
+
+            <section class="lesson-card" id="careerLessonCard">
+              <div class="lesson-topline">
+                <span id="lessonDay">第1天</span>
+                <button class="text-btn" id="openBeginnerRoadmapBtn" type="button">14天路线</button>
+              </div>
+              <h2 id="lessonTitle">先认识终端</h2>
+              <p class="lesson-why" id="lessonWhy"></p>
+              <ol id="lessonSteps"></ol>
+              <div class="lesson-proof">
+                <span>今天怎样才算完成</span>
+                <strong id="lessonProof"></strong>
+              </div>
+              <div class="lesson-actions">
+                <a class="quiet-btn" id="lessonLink" href="#" target="_blank" rel="noreferrer">打开今天的课程</a>
+                <button class="primary" id="completeLessonBtn" type="button">完成，进入下一天</button>
+              </div>
+            </section>
+
+            <details class="course-shelf" id="courseShelf">
+              <summary>全部课程入口 <span>需要时再展开</span></summary>
+              <div id="courseLinks"></div>
+            </details>
+            <div class="panel-head sub-head">
+              <h2>之后会学什么</h2>
             </div>
             <div class="career-roadmap" id="careerRoadmap"></div>
             <div class="career-coach">
@@ -258,6 +288,50 @@
       <div class="goal-roadmap-list" id="goalRoadmapList"></div>
     </dialog>
 
+    <dialog id="beginnerRoadmapDialog" class="goal-roadmap-dialog">
+      <div class="dialog-head">
+        <div>
+          <p class="small-label">第一阶段</p>
+          <h2>零基础14天路线</h2>
+        </div>
+        <button class="icon-btn" id="closeBeginnerRoadmapBtn" type="button" aria-label="关闭">×</button>
+      </div>
+      <p class="form-note">一天只推进一张卡。C/C++、SLAM和具身模型暂时不进入今日任务。</p>
+      <div class="beginner-roadmap-list" id="beginnerRoadmapList"></div>
+    </dialog>
+
+    <dialog id="internshipConfigDialog">
+      <form method="dialog" id="internshipConfigForm">
+        <h2>切换事业阶段</h2>
+        <p class="form-note">现在还没入职就保持“求职准备期”。拿到实习后填写真实时间，系统会自动重排首页。</p>
+        <label>
+          <span>上班时间</span>
+          <input id="internshipStart" type="time" value="09:00" required />
+        </label>
+        <label>
+          <span>下班时间</span>
+          <input id="internshipEnd" type="time" value="18:00" required />
+        </label>
+        <label>
+          <span>单程通勤（分钟）</span>
+          <input id="internshipCommute" type="number" min="0" max="180" value="30" required />
+        </label>
+        <label>
+          <span>上班日</span>
+          <select id="internshipDays">
+            <option value="weekdays">周一至周五</option>
+            <option value="six-days">周一至周六</option>
+            <option value="everyday">每天</option>
+          </select>
+        </label>
+        <menu>
+          <button value="cancel" type="button" id="cancelInternshipConfigBtn">取消</button>
+          <button class="quiet-btn" value="prep" type="button" id="usePrepModeBtn">继续求职准备</button>
+          <button class="primary" value="default" type="submit">我已入职</button>
+        </menu>
+      </form>
+    </dialog>
+
     <dialog id="quickEditDialog">
       <form method="dialog" id="quickEditForm">
         <h2>快速改日程</h2>
@@ -316,7 +390,7 @@
       </form>
     </dialog>
 
-    <script src="./ray-dalio-principles.js?v=20260801-2" defer></script>
-    <script src="./app.js?v=20260801-2" defer></script>
+    <script src="./ray-dalio-principles.js?v=20260801-3" defer></script>
+    <script src="./app.js?v=20260801-3" defer></script>
   </body>
 </html>
