@@ -1,12 +1,12 @@
 {
-  "name": "兑现 180",
-  "short_name": "兑现 180",
-  "description": "用 180 天，把目标变成每天可验证的证据。",
+  "name": "人生系统",
+  "short_name": "人生系统",
+  "description": "每天提醒你做该做的事，避开高刺激循环。",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0d110f",
-  "theme_color": "#0d110f",
+  "background_color": "#f7faf8",
+  "theme_color": "#17211d",
   "orientation": "portrait",
   "icons": [
     {

@@ -1,11 +1,11 @@
-const CACHE_NAME = "duixian-180-v16";
+const CACHE_NAME = "life-system-v15";
 const ASSETS = [
   "./",
   "./index.html",
-  "./styles.css?v=20260726-5",
-  "./ray-dalio-principles.js?v=20260726-5",
-  "./app.js?v=20260726-5",
-  "./manifest.webmanifest?v=20260726-5",
+  "./styles.css?v=20260801-1",
+  "./ray-dalio-principles.js?v=20260801-1",
+  "./app.js?v=20260801-1",
+  "./manifest.webmanifest?v=20260801-1",
   "./assets/icon-192.png",
   "./assets/icon-512.png"
 ];

@@ -6,20 +6,10 @@ const READ_STATS_KEY = "life-system-read-stats-v1";
 const REVIEW_KEY = "life-system-nightly-review-v1";
 const CAREER_KEY = "life-system-career-v1";
 const CALENDAR_KEY = "life-system-calendar-v1";
-const JOURNEY_KEY = "duixian-180-journey-v1";
-const ROUTINE_VERSION = 9;
+const GOAL_PROGRESS_KEY = "life-system-one-goal-v1";
+const ROUTINE_VERSION = 10;
 const EVERYDAY = [0, 1, 2, 3, 4, 5, 6];
 const WEEKDAYS = [1, 2, 3, 4, 5];
-
-const executionTracks = [
-  ["career", "主业", "专业能力或求职"],
-  ["side", "副业", "收入与能力边界"],
-  ["product", "产品", "打磨一个真实作品"],
-  ["fitness", "健身", "训练、饮食或睡眠"],
-  ["skills", "技能", "英语、AI、编程"],
-  ["trend", "风口", "只研究，不盲目下注"],
-  ["invest", "投资", "纪律、仓位与复盘"]
-];
 
 const defaultTasks = [
   ["morning-start", "07:00", "个人成长", "起床/洗漱", "10min", EVERYDAY, "每天", "7 点起床，洗脸、喝水、把手机放远。今天的主线是实习，不要一睁眼就把注意力交出去。"],
@@ -33,10 +23,10 @@ const defaultTasks = [
   ["career-skill-pm", "16:50", "职业核心", "就业硬技能", "1h10min", EVERYDAY, "每天", "下午补一段专业硬技能：把上午没跑通的环境、代码、概念或项目模块继续推进到一个可见结果。"],
   ["dinner-reset", "18:00", "个人成长", "晚饭/恢复", "30min", EVERYDAY, "每天", "简单吃饭、补水、离开屏幕。晚上的 18:30-22:00 是今天最重要的职业冲刺，不要提前把脑子耗掉。"],
   ["career-skill-night", "18:30", "职业核心", "就业硬技能", "2h", EVERYDAY, "每天", "晚上深度工作区：做具身智能项目、整理 README、跑 ROS2 demo、补 C/C++/通信协议。目标是制造能写进简历的证据。"],
-  ["career-job-plan", "20:30", "职业核心", "求职规划", "1h", EVERYDAY, "每天", "投递、改简历、看岗位、准备面试表达。今天至少推进 10 份投递或一个简历/项目展示材料。"],
+  ["career-job-plan", "20:30", "职业核心", "求职规划", "1h", EVERYDAY, "每天", "投递、改简历、看岗位、准备面试表达。每天完成 2-3 次有效投递并更新投递表，周目标不少于 15 次。"],
   ["growth-upward", "21:30", "个人成长", "上行部落/阅读", "40min", EVERYDAY, "每天", "上行部落或高质量阅读 40 分钟。只要一个输出：一句观点、一条行动、一个明天能用的判断。"],
   ["night-shutdown", "22:10", "个人成长", "洗澡/晚间复盘", "20min", EVERYDAY, "每天", "洗澡，做简短复盘：今天投递了多少、项目推进了什么、卡在哪里、明天第一步是什么。"],
-  ["eng-night", "22:30", "英语精进", "原著阅读", "45min", EVERYDAY, "每天", "睡前英语原著 45 分钟。今天英语总量控制在 1 到 1.5 小时，维持感觉即可，主力仍然是实习。"],
+  ["eng-night", "22:30", "英语精进", "原著阅读/口语输出", "45min", EVERYDAY, "每天", "睡前英语输入 30 分钟，再用英语口述 15 分钟。今天至少留下一个口语录音或复述结果。"],
   ["sleep", "23:30", "个人成长", "睡觉", "固定", EVERYDAY, "每天", "23:30 睡觉。不要用娱乐奖励自己熬夜，明天 7 点起才是真正的奖励。"]
 ].map(([id, time, category, title, duration, days, daysLabel, message]) => ({
   id,
@@ -126,53 +116,180 @@ const starterPrinciples = [
 
 const defaultPrinciples = [...rayDalioPrinciples, ...starterPrinciples];
 
+const ultimateGoal = {
+  deadline: "2027-01-31",
+  title: "完成一次坦荡的行动，结束无期限等待",
+  copy: "在职业、收入、身体和生活进入稳定上升，并能承受再次被拒绝后，完成一次明确、尊重、无压力的邀约和表达；无论结果如何，不再等待、猜测和反复求证。"
+};
+
+const monthlyPlans = [
+  {
+    month: "2026-08",
+    label: "8月",
+    title: "定方向，搭系统，启动证据链",
+    milestones: [
+      "8/5前：建立收入、支出、负债、投资四张清单；确定六首演出曲目",
+      "8/10前：用岗位数据确定主职业方向和一个备选方向",
+      "8/20前：分析30份目标岗位JD，形成重复技能清单",
+      "8/31前：上线简历、GitHub主页和两个项目规划；连续训练4周"
+    ],
+    weeks: [
+      ["建账与选曲", "完成四张财务清单和六首曲目清单", "分析首批10份JD并建立技能标签", "记录体重、围度、力量与形象基线"],
+      ["职业方向决策", "完成主方向与备选方向对比表", "把JD样本扩展到20份", "启动每周15次投递和一次项目讲解"],
+      ["技能清单定稿", "完成30份JD分析和技能优先级", "确定项目一的范围、验收和演示方式", "完成简历第一版并开始真实投递检验"],
+      ["公开第一批证据", "上线GitHub主页、项目规划和简历迭代版", "整理本月投递、训练、收入和社交记录", "完成一次项目讲解录像"],
+      ["八月验收", "确认方向不再随短视频和观点摇摆", "补齐八次主动交流和训练记录", "写出九月项目一的四周交付计划"]
+    ]
+  },
+  {
+    month: "2026-09",
+    label: "9月",
+    title: "做出第一个能展示的项目",
+    milestones: [
+      "完成第一个可展示项目及演示视频",
+      "累计完成30次有效投递并记录反馈",
+      "完成第一首钢琴和第一首吉他曲目",
+      "体重增加约1—2千克；确定发型方向和两套基础穿搭"
+    ],
+    weeks: [
+      ["项目骨架", "跑通项目主流程并建立README结构", "完成15次投递和一次项目讲解", "完成两首曲目的分段计划"],
+      ["核心功能", "完成项目最重要的可演示能力", "根据投递反馈修订简历", "参加一次线下社交活动"],
+      ["可靠性与表达", "补日志、测试、异常处理和架构说明", "录制项目讲解并修正表达漏洞", "完成两套基础穿搭"],
+      ["项目一发布", "发布代码、README和演示视频", "累计投递达到30次", "完整演奏第一首钢琴和第一首吉他"],
+      ["九月验收", "只用项目链接、投递表和录像验收", "记录体重变化与训练数据", "确定十月项目二范围"]
+    ]
+  },
+  {
+    month: "2026-10",
+    label: "10月",
+    title: "推进第二项目，扩大真实反馈",
+    milestones: [
+      "第二个项目完成50%以上，累计投递60次",
+      "应急资金达到半个月生活费",
+      "建立四套完整穿搭，三大项训练重量明显上涨",
+      "累计完成三首曲目，并完成第一次低压力邀约"
+    ],
+    weeks: [
+      ["项目二启动", "确定用户问题、技术边界和验收标准", "完成15次投递", "完成一次低压力邀约准备与真实交流"],
+      ["主链路跑通", "完成项目二核心链路", "进行一次模拟面试", "检查应急资金进度"],
+      ["做到一半以上", "补测试、文档和可视化证据", "根据岗位反馈定向补一个硬技能", "完成第三首曲目"],
+      ["十月交付", "项目二达到50%以上并留下演示", "累计投递达到60次", "形成四套可直接使用的穿搭"],
+      ["十月验收", "复盘邀请、项目、资金和力量数据", "删除没有产生证据的学习活动", "确定十一月面试冲刺清单"]
+    ]
+  },
+  {
+    month: "2026-11",
+    label: "11月",
+    title: "完成项目二，集中赢得机会",
+    milestones: [
+      "11/15前完成第二个项目，转入集中面试",
+      "11/30前获得实习，或明确进入最终招聘阶段",
+      "月收入达到8000元一次；体重达到60—62千克",
+      "累计完成四首曲目和三次真实邀约或一对一见面"
+    ],
+    weeks: [
+      ["项目二收口", "完成剩余功能、测试和README", "准备两分钟与十分钟项目讲解", "完成15次定向投递"],
+      ["项目二发布", "11/15前发布演示视频和完整证据", "开始集中模拟面试", "整理常见问题答案"],
+      ["面试冲刺", "每次沟通后24小时内修正一个漏洞", "跟进高匹配岗位", "记录收入与体重变化"],
+      ["拿到明确结果", "推动实习或招聘进入最终阶段", "完成第四首曲目", "累计完成三次真实邀约或见面"],
+      ["十一月验收", "确认12月实习或替代项目安排", "检查能否承受她不愿意见面", "制定十二月稳定执行表"]
+    ]
+  },
+  {
+    month: "2026-12",
+    label: "12月",
+    title: "进入真实工作，完成六首曲目",
+    milestones: [
+      "12/1前最迟开始一段两个月实习或等价真实项目",
+      "应急资金达到一个月生活费",
+      "六首曲目全部能够独立演奏",
+      "体重达到61.5—63.5千克；条件满足时恢复一次自然联系"
+    ],
+    weeks: [
+      ["进入真实场景", "开始实习或等价项目并记录工作成果", "建立每周工作复盘", "保持训练和英语底线"],
+      ["稳定输出", "交付一个真实工作结果", "补齐第五首曲目", "检查应急资金缺口"],
+      ["完成六首", "六首曲目全部独立演奏", "进行一次串联录像", "记录体重和体态照片"],
+      ["自然联系", "仅在状态稳定且能接受拒绝时进行简短联系", "观察是否愿意回复、交流和见面", "不提交成长汇报，不索取答案"],
+      ["十二月验收", "确认实习成果、资金、六首曲目与身体数据", "决定一月是否具备邀约条件", "准备完整Show和彩排计划"]
+    ]
+  },
+  {
+    month: "2027-01",
+    label: "1月",
+    title: "完成验收、Show与最终行动",
+    milestones: [
+      "完成实习并获得延续机会，或确定毕业出路",
+      "完成最终力量、围度、体态和形象验收",
+      "1/15前完成完整彩排，1/31前完成正式Show或完整录制",
+      "1/31前完成明确邀约和表达，并接受真实结果"
+    ],
+    weeks: [
+      ["职业与身体收口", "整理实习成果和毕业去向", "完成最终力量测试与形象照片", "把六首曲目串联"],
+      ["完成第一次彩排", "1/15前完成不少于20分钟完整彩排", "修复最不稳定的演奏段落", "准备简短明确的邀约"],
+      ["提出明确邀约", "不长篇解释，不把成长当交换条件", "根据对方真实反馈行动", "继续稳定工作和训练"],
+      ["完成Show与表达", "完成正式演出或完整录制", "完成最终表达并接受结果", "停止无期限等待"],
+      ["六个月总验收", "汇总项目、投递、收入、身体、社交和音乐证据", "确认毕业出路", "写下下一阶段唯一目标"]
+    ]
+  }
+];
+
+const weeklyMinimums = [
+  "项目或岗位技能15小时，并留下一个可检查进度",
+  "有效投递15次；项目讲解或模拟面试1次",
+  "英语输入7小时，并持续口语输出",
+  "力量训练4次、足球或体能1次、体态训练3次",
+  "音乐练习5次；真实主动交流2次",
+  "创造收入机会2次，并完成1次财务记录"
+];
+
 const careerRoadmap = [
   {
-    range: "01—04 周",
-    title: "工程地基",
-    focus: "C/C++、Linux、Git、CMake。每周做一个可运行小程序，把编译、调试和版本管理练成肌肉记忆。"
+    range: "8月",
+    title: "定方向与技能清单",
+    focus: "确定主攻岗位和备选岗位；分析30份JD；上线简历、GitHub主页和两个项目规划。"
   },
   {
-    range: "05—08 周",
-    title: "视觉与感知",
-    focus: "OpenCV 图像处理、相机模型、YOLO 推理。交付一个能在真实视频上稳定运行的检测 Demo。"
+    range: "9月",
+    title: "项目一发布",
+    focus: "完成第一个可展示项目、README和演示视频，累计完成30次有效投递。"
   },
   {
-    range: "09—12 周",
-    title: "ROS2 系统",
-    focus: "Node、Topic、Service、Action、TF2、Launch。把感知结果接入 ROS2，并留下架构图与演示视频。"
+    range: "10月",
+    title: "项目二过半",
+    focus: "第二个项目完成50%以上，累计投递60次，用招聘反馈定向补硬技能。"
   },
   {
-    range: "13—16 周",
-    title: "定位与建图",
-    focus: "里程计、IMU、点云、SLAM 基础。跑通一个开源方案，并能解释数据流、坐标系和失败原因。"
+    range: "11月",
+    title: "完成项目与集中面试",
+    focus: "11月15日前完成项目二，月底前获得实习或进入最终招聘阶段。"
   },
   {
-    range: "17—20 周",
-    title: "完整作品",
-    focus: "组合感知、决策与执行，做一个可重复演示的具身智能项目。README、测试、视频必须齐全。"
+    range: "12月",
+    title: "进入真实工作",
+    focus: "最迟12月1日开始两个月实习；若没有录用，执行等价真实项目并周周交付。"
   },
   {
-    range: "21—24 周",
-    title: "进入行业",
-    focus: "按岗位 JD 补短板，整理简历与项目表达，持续投递、面试和迭代作品，争取真实项目或实习。"
+    range: "1月",
+    title: "毕业出路验收",
+    focus: "完成实习并争取延续机会，或确定毕业后的主方向与明确去向。"
   }
 ];
 
 const careerDailyTemplates = [
-  ["核心构建", "连续做 90 分钟当前阶段项目。必须产生代码、运行结果、调试记录或演示。"],
-  ["最小技能", "围绕今天的真实卡点补一块 C/C++、Linux、OpenCV、ROS2 或 SLAM，不脱离项目刷课。"],
-  ["公开证据", "至少一次 Git 提交，或整理一页笔记、一个 README 片段、一段演示视频。"],
-  ["行业连接", "研究 3 个岗位 JD、投递 3—10 份，或联系一位从业者；记录对方真正要求的能力。"]
+  ["投递推进", "完成2-3次有效投递，记录岗位、渠道、匹配点、状态和下一步；每周累计不少于15次。"],
+  ["ROS2项目", "至少1次Git提交。今天围绕自然语言命令、JSON校验、ROS2节点、日志或测试推进一个可见结果。"],
+  ["基础栈", "补Linux/Python/Git/ROS2一块最小知识。原则：跑通命令、截图/记录结果，而不是只看课。"],
+  ["面试表达", "每天口述15分钟；每周至少一次完整的30分钟项目讲解或模拟面试。重点讲数据流、失败降级和AI参与边界。"],
+  ["简历证据", "把今天的代码、投递、面试、Bug或演示整理成一句可写进简历/周报的证据。"]
 ];
 
 const careerPhases = [
-  { weeks: [1, 4], label: "工程地基", title: "先跑通，再理解", summary: "今天只解决一个真实工程问题。能编译、能运行、能解释，比看完多少课重要。" },
-  { weeks: [5, 8], label: "视觉感知", title: "让机器真正看见", summary: "围绕真实图像和视频做 OpenCV 与 YOLO；输出效果、速度和失败样例。" },
-  { weeks: [9, 12], label: "ROS2 系统", title: "把模块连成系统", summary: "不背概念。用 Node、Topic、Service、Action 和 TF2 把数据流跑通。" },
-  { weeks: [13, 16], label: "定位建图", title: "理解机器人身在何处", summary: "跑通 SLAM，并能解释传感器、坐标系、漂移和失败原因。" },
-  { weeks: [17, 20], label: "完整作品", title: "做出能反复演示的作品", summary: "把感知、决策和执行组合起来；演示、测试、文档缺一不可。" },
-  { weeks: [21, 24], label: "行业落地", title: "让作品换来真实机会", summary: "按岗位反馈迭代作品、简历和表达，持续投递，不躲回无限学习。" }
+  { start: "2026-08-01", end: "2026-08-31", label: "定向期", title: "先确定打哪一场仗", summary: "用30份JD决定主攻岗位和备选岗位，上线简历、GitHub主页与项目规划。" },
+  { start: "2026-09-01", end: "2026-09-30", label: "项目一期", title: "做出第一个能展示的证据", summary: "完成项目一、README和演示视频；累计完成30次有效投递。" },
+  { start: "2026-10-01", end: "2026-10-31", label: "项目二期", title: "让第二个项目超过半程", summary: "项目二完成50%以上，累计投递60次，用岗位反馈决定补什么。" },
+  { start: "2026-11-01", end: "2026-11-30", label: "面试期", title: "完成项目，集中赢得机会", summary: "11月15日前完成项目二，月底前获得实习或进入最终招聘阶段。" },
+  { start: "2026-12-01", end: "2026-12-31", label: "实战期", title: "进入真实工作场景", summary: "开始两个月实习或等价真实项目，每周留下可验证工作成果。" },
+  { start: "2027-01-01", end: "2027-01-31", label: "验收期", title: "确定毕业出路", summary: "完成实习、争取延续机会，或确定主职业方向和明确去向。" }
 ];
 
 let state = loadState();
@@ -182,7 +299,7 @@ let principles = loadPrinciples();
 let readStats = loadReadStats();
 let reviewState = loadReviewState();
 let careerState = loadCareerState();
-let journeyState = loadJourneyState();
+let goalProgress = loadGoalProgress();
 let editingId = "";
 let activeTab = 0;
 let activeAvoidId = state.avoids[0]?.id || "";
@@ -209,13 +326,21 @@ const els = {
   dateLabel: document.querySelector("#dateLabel"),
   pages: document.querySelector("#pages"),
   tabs: [...document.querySelectorAll(".tab")],
+  missionCountdown: document.querySelector("#missionCountdown"),
+  monthLabel: document.querySelector("#monthLabel"),
+  monthTitle: document.querySelector("#monthTitle"),
+  monthMilestones: document.querySelector("#monthMilestones"),
+  weekLabel: document.querySelector("#weekLabel"),
+  weekTitle: document.querySelector("#weekTitle"),
+  weekMilestones: document.querySelector("#weekMilestones"),
+  dailyProofScore: document.querySelector("#dailyProofScore"),
+  dailyProofList: document.querySelector("#dailyProofList"),
+  openGoalRoadmapBtn: document.querySelector("#openGoalRoadmapBtn"),
+  goalRoadmapDialog: document.querySelector("#goalRoadmapDialog"),
+  closeGoalRoadmapBtn: document.querySelector("#closeGoalRoadmapBtn"),
+  goalRoadmapList: document.querySelector("#goalRoadmapList"),
   nowTitle: document.querySelector("#nowTitle"),
   nowMessage: document.querySelector("#nowMessage"),
-  journeyDay: document.querySelector("#journeyDay"),
-  journeyPercent: document.querySelector("#journeyPercent"),
-  journeyProgressBar: document.querySelector("#journeyProgressBar"),
-  trackGrid: document.querySelector("#trackGrid"),
-  trackCount: document.querySelector("#trackCount"),
   notifyBtn: document.querySelector("#notifyBtn"),
   coachNowBtn: document.querySelector("#coachNowBtn"),
   addTaskBtn: document.querySelector("#addTaskBtn"),
@@ -315,6 +440,8 @@ function init() {
   }).format(new Date());
 
   els.tabs.forEach((tab) => tab.addEventListener("click", () => setTab(Number(tab.dataset.tab))));
+  els.openGoalRoadmapBtn.addEventListener("click", () => els.goalRoadmapDialog.showModal());
+  els.closeGoalRoadmapBtn.addEventListener("click", () => els.goalRoadmapDialog.close());
   els.pages.addEventListener("touchstart", (event) => {
     touchStartX = event.touches[0].clientX;
   });
@@ -384,7 +511,7 @@ function updateServiceWorker() {
     window.location.reload();
   });
   navigator.serviceWorker
-    .register("./sw.js?v=20260726-5", { updateViaCache: "none" })
+    .register("./sw.js?v=20260801-1", { updateViaCache: "none" })
     .then((registration) => registration.update())
     .catch(() => {});
 }
@@ -447,12 +574,8 @@ function loadCareerState() {
   return JSON.parse(localStorage.getItem(CAREER_KEY) || '{"backlog":[]}');
 }
 
-function loadJourneyState() {
-  const saved = JSON.parse(localStorage.getItem(JOURNEY_KEY) || "null");
-  if (saved) return saved;
-  const initial = { startedOn: todayKey(), tracks: {} };
-  localStorage.setItem(JOURNEY_KEY, JSON.stringify(initial));
-  return initial;
+function loadGoalProgress() {
+  return JSON.parse(localStorage.getItem(GOAL_PROGRESS_KEY) || "{}");
 }
 
 function saveState() {
@@ -484,12 +607,12 @@ function saveCareerState() {
   localStorage.setItem(CAREER_KEY, JSON.stringify(careerState));
 }
 
-function saveJourneyState() {
-  localStorage.setItem(JOURNEY_KEY, JSON.stringify(journeyState));
+function saveGoalProgress() {
+  localStorage.setItem(GOAL_PROGRESS_KEY, JSON.stringify(goalProgress));
 }
 
-function todayKey() {
-  return new Date().toISOString().slice(0, 10);
+function todayKey(date = new Date()) {
+  return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, "0"), String(date.getDate()).padStart(2, "0")].join("-");
 }
 
 function minutesNow() {
@@ -520,7 +643,7 @@ function syncTabFromScroll() {
 }
 
 function render() {
-  renderJourney();
+  renderFocusSystem();
   renderTasks();
   renderCareer();
   renderAvoids();
@@ -533,43 +656,6 @@ function render() {
   updateNotifyButton();
 }
 
-function journeyDayNumber() {
-  const start = new Date(`${journeyState.startedOn || todayKey()}T00:00:00`);
-  const today = new Date(`${todayKey()}T00:00:00`);
-  return Math.max(1, Math.min(180, Math.floor((today - start) / 86400000) + 1));
-}
-
-function renderJourney() {
-  const day = journeyDayNumber();
-  const percent = Math.round((day / 180) * 100);
-  els.journeyDay.textContent = `DAY ${day} / 180`;
-  els.journeyPercent.textContent = `${percent}%`;
-  els.journeyProgressBar.style.width = `${Math.max(1, percent)}%`;
-
-  const todayTracks = journeyState.tracks?.[todayKey()] || {};
-  const checked = executionTracks.filter(([id]) => todayTracks[id]).length;
-  els.trackCount.textContent = `${checked} / ${executionTracks.length}`;
-  els.trackGrid.replaceChildren(
-    ...executionTracks.map(([id, title, note]) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = `track-chip${todayTracks[id] ? " active" : ""}`;
-      button.innerHTML = `<span></span><strong></strong><small></small>`;
-      button.querySelector("span").textContent = todayTracks[id] ? "●" : "○";
-      button.querySelector("strong").textContent = title;
-      button.querySelector("small").textContent = note;
-      button.addEventListener("click", () => {
-        journeyState.tracks = journeyState.tracks || {};
-        journeyState.tracks[todayKey()] = journeyState.tracks[todayKey()] || {};
-        journeyState.tracks[todayKey()][id] = !journeyState.tracks[todayKey()][id];
-        saveJourneyState();
-        renderJourney();
-      });
-      return button;
-    })
-  );
-}
-
 function currentTask() {
   const active = state.tasks
     .filter((task) => task.enabled && isTaskActiveToday(task) && !task.done)
@@ -580,6 +666,126 @@ function currentTask() {
     active.find((task) => minutesFromTime(task.time) >= minutesNow()) ||
     pastTasks[pastTasks.length - 1] ||
     null
+  );
+}
+
+function currentMonthPlan(date = new Date()) {
+  const key = todayKey(date).slice(0, 7);
+  return monthlyPlans.find((plan) => plan.month === key) || (key < monthlyPlans[0].month ? monthlyPlans[0] : monthlyPlans[monthlyPlans.length - 1]);
+}
+
+function currentWeekPlan(date = new Date()) {
+  const plan = currentMonthPlan(date);
+  const weekIndex = Math.min(Math.floor((date.getDate() - 1) / 7), plan.weeks.length - 1);
+  const start = weekIndex * 7 + 1;
+  const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  const end = Math.min(start + 6, lastDay);
+  const [title, ...items] = plan.weeks[weekIndex];
+  return { title, items, label: `${date.getMonth() + 1}/${start}—${date.getMonth() + 1}/${end}` };
+}
+
+function dailyEvidence(date = new Date()) {
+  const week = currentWeekPlan(date);
+  const weekday = date.getDay();
+  const mondayIndex = (weekday + 6) % 7;
+  const sprintItem = week.items[mondayIndex % week.items.length];
+  const rotating = [
+    ["周验收", "回答六个验收问题，汇总投递、项目、收入、训练、社交和音乐证据。"],
+    ["音乐练习", "练习30—60分钟，拆一个具体段落并记录完成度。"],
+    ["真实社交", "完成一次主动、真实、尊重反馈的交流；不把对方当考官。"],
+    ["体态与形象", "完成10—15分钟体态训练，并检查头前伸、含胸和整洁细节。"],
+    ["音乐练习", "练习30—60分钟，至少完成一次不中断段落录制。"],
+    ["财务记录", "记录收入、支出、结余和投资；完成一项直接创造收入机会的行动。"],
+    ["社交与音乐", "完成一次主动交流，并练习音乐30分钟；只记录真实行动。"]
+  ][weekday];
+  const applicationTask = weekday === 0
+    ? ["投递复盘", "统计本周有效投递是否达到15次，跟进未回复岗位并确定下周名单。"]
+    : ["有效投递", "完成2—3次有效投递，写下匹配点并更新投递表。"];
+
+  return [
+    { id: "sprint", title: "本周节点", text: sprintItem },
+    { id: "career-proof", title: "职业证据", text: "完成至少3小时项目或岗位技能工作，并留下Git提交、文档、演示或面试答案。" },
+    { id: "applications", title: applicationTask[0], text: applicationTask[1] },
+    { id: "english", title: "英语输入与输出", text: "完成45分钟高质量输入和15分钟口语输出，留下复述或录音。" },
+    { id: "body", title: "身体记录", text: "训练日记录重量、组数和次数；休息日记录体重并完成10分钟体态训练。" },
+    { id: "rotation", title: rotating[0], text: rotating[1] }
+  ];
+}
+
+function renderFocusSystem() {
+  if (!els.dailyProofList) return;
+  const now = new Date();
+  const month = currentMonthPlan(now);
+  const week = currentWeekPlan(now);
+  const deadline = new Date(`${ultimateGoal.deadline}T23:59:59`);
+  const daysLeft = Math.max(0, Math.ceil((deadline - now) / 86400000));
+  els.missionCountdown.textContent = `距验收 ${daysLeft} 天`;
+  els.monthLabel.textContent = `${month.label}必须完成`;
+  els.monthTitle.textContent = month.title;
+  els.monthMilestones.replaceChildren(...month.milestones.map(missionListItem));
+  els.weekLabel.textContent = `${week.label} 本周交付`;
+  els.weekTitle.textContent = week.title;
+  els.weekMilestones.replaceChildren(...week.items.map(missionListItem));
+
+  const today = todayKey(now);
+  const completed = goalProgress[today] || {};
+  const tasks = dailyEvidence(now);
+  const doneCount = tasks.filter((task) => completed[task.id]).length;
+  els.dailyProofScore.textContent = `${doneCount} / ${tasks.length}`;
+  els.dailyProofList.replaceChildren(
+    ...tasks.map((task) => {
+      const row = document.createElement("article");
+      row.className = `daily-proof${completed[task.id] ? " done" : ""}`;
+      row.innerHTML = `<button type="button" aria-label="完成"></button><div><strong></strong><p></p></div>`;
+      row.querySelector("button").textContent = completed[task.id] ? "↺" : "✓";
+      row.querySelector("strong").textContent = task.title;
+      row.querySelector("p").textContent = task.text;
+      row.querySelector("button").addEventListener("click", () => toggleDailyProof(task.id));
+      return row;
+    })
+  );
+  renderGoalRoadmap();
+}
+
+function missionListItem(text) {
+  const item = document.createElement("li");
+  item.textContent = text;
+  return item;
+}
+
+function toggleDailyProof(id) {
+  const today = todayKey();
+  goalProgress[today] = goalProgress[today] || {};
+  goalProgress[today][id] = !goalProgress[today][id];
+  saveGoalProgress();
+  renderFocusSystem();
+}
+
+function renderGoalRoadmap() {
+  const weeklyFloor = document.createElement("section");
+  weeklyFloor.className = "weekly-floor";
+  weeklyFloor.innerHTML = `<div class="goal-month-head"><span>每周底线</span><strong>少一项就必须解释</strong></div><ul></ul>`;
+  weeklyFloor.querySelector("ul").replaceChildren(...weeklyMinimums.map(missionListItem));
+  els.goalRoadmapList.replaceChildren(
+    weeklyFloor,
+    ...monthlyPlans.map((plan) => {
+      const section = document.createElement("section");
+      section.className = `goal-month${plan.month === todayKey().slice(0, 7) ? " current" : ""}`;
+      section.innerHTML = `<div class="goal-month-head"><span></span><strong></strong></div><p></p><div class="goal-week-lines"></div>`;
+      section.querySelector("span").textContent = plan.label;
+      section.querySelector("strong").textContent = plan.title;
+      section.querySelector("p").textContent = plan.milestones.join("；");
+      section.querySelector(".goal-week-lines").replaceChildren(
+        ...plan.weeks.map((week, index) => {
+          const line = document.createElement("div");
+          line.innerHTML = `<b></b><span></span>`;
+          line.querySelector("b").textContent = `第${index + 1}周`;
+          line.querySelector("span").textContent = `${week[0]}：${week.slice(1).join("；")}`;
+          return line;
+        })
+      );
+      return section;
+    })
   );
 }
 
@@ -632,25 +838,27 @@ function renderTasks() {
 }
 
 function careerPhaseForToday() {
-  const week = Math.max(1, Math.min(24, Math.ceil(journeyDayNumber() / 7)));
-  return careerPhases.find((phase) => week >= phase.weeks[0] && week <= phase.weeks[1]) || careerPhases[0];
+  const today = todayKey();
+  return (
+    careerPhases.find((phase) => today >= phase.start && today <= phase.end) ||
+    (today < careerPhases[0].start ? careerPhases[0] : careerPhases[careerPhases.length - 1])
+  );
 }
 
 function renderCareer() {
   if (!els.careerTodayList) return;
   const phase = careerPhaseForToday();
-  const week = Math.max(1, Math.min(24, Math.ceil(journeyDayNumber() / 7)));
-  els.careerPhaseLabel.textContent = `第 ${week} 周 / 24 · ${phase.label}`;
+  els.careerPhaseLabel.textContent = `${phase.label} / ${todayKey()}`;
   els.careerTodayTitle.textContent = phase.title;
   els.careerTodaySummary.textContent = phase.summary;
 
   const backlogToday = (careerState.backlog || []).filter((item) => item.date <= todayKey());
   const doneToday = Object.entries(careerState.done || {}).filter(([key, value]) => key.startsWith(todayKey()) && value).length;
   els.careerScore.replaceChildren(
-    careerMetric("深度构建", "90 分钟"),
-    careerMetric("公开证据", "至少 1 份"),
-    careerMetric("行业连接", "3 次动作"),
-    careerMetric("今日兑现", `${doneToday} / ${careerDailyTemplates.length}`)
+    careerMetric("本周投递", "至少15次"),
+    careerMetric("Git提交", "至少1次"),
+    careerMetric("项目讲解", "每周1次"),
+    careerMetric("已勾选", `${doneToday}项`)
   );
 
   const tasks = [...careerDailyTemplates];
@@ -661,33 +869,17 @@ function renderCareer() {
       const row = document.createElement("article");
       row.className = `career-task${careerState.done?.[key] ? " done" : ""}`;
       row.innerHTML = `
-        <button class="evidence-submit" type="button">${careerState.done?.[key] ? "撤销" : "提交"}</button>
+        <button type="button" aria-label="完成">${careerState.done?.[key] ? "↺" : "✓"}</button>
         <div>
           <strong></strong>
           <p></p>
-          <textarea class="evidence-input" rows="2" maxlength="240" placeholder="留下证据：Git 提交、文件名、截图说明、笔记结论或投递记录…"></textarea>
         </div>
       `;
       row.querySelector("strong").textContent = title;
       row.querySelector("p").textContent = text;
-      const evidenceInput = row.querySelector(".evidence-input");
-      evidenceInput.value = careerState.evidence?.[key] || "";
-      evidenceInput.disabled = Boolean(careerState.done?.[key]);
       row.querySelector("button").addEventListener("click", () => {
         careerState.done = careerState.done || {};
-        careerState.evidence = careerState.evidence || {};
-        if (careerState.done[key]) {
-          careerState.done[key] = false;
-        } else {
-          const evidence = evidenceInput.value.trim();
-          if (!evidence) {
-            evidenceInput.focus();
-            evidenceInput.classList.add("needs-evidence");
-            return;
-          }
-          careerState.evidence[key] = evidence;
-          careerState.done[key] = true;
-        }
+        careerState.done[key] = !careerState.done[key];
         saveCareerState();
         renderCareer();
       });
@@ -723,15 +915,33 @@ async function askCareerCoach() {
     return;
   }
 
-  els.careerAnswer.textContent = "正在整理下一步...";
+  els.careerAnswer.textContent = "正在判断下一步...";
   els.careerAskBtn.disabled = true;
-  els.careerAnswer.textContent = localCareerReply(message);
-  els.careerListenNote.textContent = "本地助手已回复，不需要联网或消耗 API 额度。";
-  maybeAddCareerBacklog(message);
-  els.careerAskBtn.disabled = false;
-  els.careerQuestion.value = "";
-  saveCareerState();
-  renderCareer();
+  try {
+    const response = await fetch("./api/career-coach", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        message,
+        phase: careerPhaseForToday(),
+        todayTasks: careerDailyTemplates,
+        backlog: (careerState.backlog || []).slice(-10),
+        done: careerState.done || {}
+      })
+    });
+    const data = await response.json();
+    els.careerAnswer.textContent = data.reply || localCareerReply(message);
+    if (data.model) els.careerListenNote.textContent = `已回复：${data.model}`;
+  } catch {
+    els.careerAnswer.textContent = localCareerReply(message);
+    els.careerListenNote.textContent = "网络或模型接口暂时不可用，先用本地判断给你顶上。";
+  } finally {
+    maybeAddCareerBacklog(message);
+    els.careerAskBtn.disabled = false;
+    els.careerQuestion.value = "";
+    saveCareerState();
+    renderCareer();
+  }
 }
 
 function startCareerVoice() {
@@ -1219,7 +1429,17 @@ async function importPrinciples(event) {
 
 async function createPrincipleFromChinese(chinese, source, manualEnglish = "") {
   if (manualEnglish) return { id: makeId(), source, chinese, english: manualEnglish, target: 3 };
-  return { id: makeId(), source, chinese, english: localPrincipleEnglish(chinese), target: 3 };
+  try {
+    const response = await fetch("./api/principle-english", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ chinese })
+    });
+    const data = await response.json();
+    return { id: makeId(), source, chinese, english: data.english || localPrincipleEnglish(chinese), target: 3 };
+  } catch {
+    return { id: makeId(), source, chinese, english: localPrincipleEnglish(chinese), target: 3 };
+  }
 }
 
 function openReminderDialog() {
@@ -1300,7 +1520,7 @@ function downloadCalendarFile(tasks) {
       `DTSTART;TZID=Asia/Shanghai:${calendarDate(start)}`,
       `DTEND;TZID=Asia/Shanghai:${calendarDate(end)}`,
       `RRULE:FREQ=WEEKLY;BYDAY=${byDay}`,
-      `SUMMARY:${escapeCalendarText(`兑现 180：${task.title}`)}`,
+      `SUMMARY:${escapeCalendarText(`人生系统：${task.title}`)}`,
       `DESCRIPTION:${escapeCalendarText(task.message)}`,
       "BEGIN:VALARM",
       "TRIGGER:PT0M",
@@ -1316,14 +1536,14 @@ function downloadCalendarFile(tasks) {
     "PRODID:-//Mingjie Life System//ZH-CN",
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    "X-WR-CALNAME:兑现 180",
+    "X-WR-CALNAME:人生系统",
     ...events,
     "END:VCALENDAR"
   ].join("\r\n");
   const url = URL.createObjectURL(new Blob([content], { type: "text/calendar;charset=utf-8" }));
   const link = document.createElement("a");
   link.href = url;
-  link.download = "兑现180日程.ics";
+  link.download = "人生系统日程.ics";
   document.body.append(link);
   link.click();
   link.remove();
@@ -1377,7 +1597,7 @@ function maybeSendReviewReminder() {
 
 function showReminder(title, body) {
   if ("Notification" in window && Notification.permission === "granted") {
-    navigator.serviceWorker?.ready.then((registration) => registration.showNotification(`兑现 180：${title}`, {
+    navigator.serviceWorker?.ready.then((registration) => registration.showNotification(`人生系统：${title}`, {
       body,
       icon: "./assets/icon-192.png",
       badge: "./assets/icon-192.png",
@@ -1544,8 +1764,22 @@ async function submitNightlyReview() {
     return;
   }
 
-  els.reviewResult.textContent = "正在本地评分...";
-  saveReviewResult(localReviewScore(text));
+  els.reviewResult.textContent = "正在评分...";
+  try {
+    const response = await fetch("./api/nightly-review", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        text,
+        goals: state.tasks.map(({ title, category, done }) => ({ title, category, done })),
+        principles: dailyPrinciples().map(({ source, chinese, english }) => ({ source, chinese, english }))
+      })
+    });
+    const data = await response.json();
+    saveReviewResult(data.review || localReviewScore(text));
+  } catch {
+    saveReviewResult(localReviewScore(text));
+  }
 }
 
 function saveReviewResult(result) {
@@ -1693,8 +1927,24 @@ async function askCoach(message, task = null) {
   els.chatInput.value = "";
   renderChat();
 
-  chat[chat.length - 1] = { role: "assistant", text: localCoachReply(message, activeTask) };
-  els.modelLabel.textContent = "本地助手";
+  try {
+    const response = await fetch("./api/coach", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        message,
+        currentTask: activeTask,
+    avoidList: state.avoids.map(({ title, mantra, chineseMantra }) => ({ title, mantra, chineseMantra, active: title === activeAvoid()?.title })),
+        recentChat: chat.slice(-8)
+      })
+    });
+    const data = await response.json();
+    chat[chat.length - 1] = { role: "assistant", text: data.reply || localCoachReply(message, activeTask) };
+    els.modelLabel.textContent = data.model || "local";
+  } catch {
+    chat[chat.length - 1] = { role: "assistant", text: localCoachReply(message, activeTask) };
+    els.modelLabel.textContent = "local";
+  }
 
   saveChat();
   renderChat();
