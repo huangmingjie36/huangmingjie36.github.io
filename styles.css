@@ -1,14 +1,19 @@
 :root {
   color-scheme: light;
-  --ink: #17211d;
-  --muted: #64716b;
-  --line: #dce4df;
-  --paper: #f7faf8;
+  --ink: #20241f;
+  --muted: #687069;
+  --line: #dfe4dc;
+  --paper: #f8faf5;
   --panel: #ffffff;
-  --green: #2f7d57;
-  --amber: #d28a24;
+  --yellow: #ffd84d;
+  --yellow-soft: #fff4ba;
+  --green: #247a59;
+  --mint: #dff4e8;
+  --blue: #ddecff;
+  --coral: #ffe0d6;
+  --amber: #bd7417;
   --red: #b84a3f;
-  --shadow: 0 16px 42px rgba(23, 33, 29, 0.12);
+  --shadow: 0 10px 24px rgba(45, 55, 47, 0.09);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -24,9 +29,7 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(47, 125, 87, 0.12), transparent 28rem),
-    var(--paper);
+  background: var(--paper);
   color: var(--ink);
 }
 
@@ -69,6 +72,22 @@ button {
   gap: 12px;
 }
 
+.brand-lockup {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-mark {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  border: 3px solid #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(45, 55, 47, 0.14);
+}
+
 .eyebrow,
 .small-label {
   margin: 0 0 6px;
@@ -85,7 +104,7 @@ p {
 
 h1 {
   margin-bottom: 0;
-  font-size: clamp(2.1rem, 9vw, 4rem);
+  font-size: clamp(1.85rem, 8vw, 3rem);
   line-height: 0.95;
   letter-spacing: 0;
 }
@@ -124,15 +143,16 @@ h1 {
 .panel {
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--panel);
   box-shadow: var(--shadow);
 }
 
 .mission-panel {
   padding: 16px;
+  border: 1px solid #e9c432;
   border-radius: 8px;
-  background: var(--ink);
-  color: #fff;
+  background: var(--yellow);
+  color: var(--ink);
   box-shadow: var(--shadow);
 }
 
@@ -148,12 +168,12 @@ h1 {
 
 .mission-topline .small-label {
   margin-bottom: 0;
-  color: #b8c5bf;
+  color: #66550f;
 }
 
 .mission-topline > strong {
   flex-shrink: 0;
-  color: #f4bd63;
+  color: #6d5710;
   font-size: 0.76rem;
 }
 
@@ -166,7 +186,7 @@ h1 {
 
 .mission-copy {
   margin-bottom: 14px;
-  color: #d7dfdb;
+  color: #4c461f;
   font-size: 0.88rem;
   line-height: 1.52;
 }
@@ -174,21 +194,21 @@ h1 {
 .mission-focus-grid {
   display: grid;
   gap: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(70, 57, 8, 0.2);
+  border-bottom: 1px solid rgba(70, 57, 8, 0.2);
   padding: 12px 0;
 }
 
 .mission-focus-grid section + section {
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(70, 57, 8, 0.16);
 }
 
 .mission-focus-grid span,
 .daily-proof-head span {
   display: block;
   margin-bottom: 4px;
-  color: #93a39b;
+  color: #76631c;
   font-size: 0.72rem;
   font-weight: 900;
 }
@@ -204,7 +224,7 @@ h1 {
   gap: 5px;
   margin: 8px 0 0;
   padding-left: 18px;
-  color: #d7dfdb;
+  color: #4c461f;
   font-size: 0.78rem;
   line-height: 1.42;
 }
@@ -220,8 +240,8 @@ h1 {
 
 .daily-proof-head .text-btn {
   min-height: 38px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.58);
+  color: var(--ink);
 }
 
 .daily-proof-list {
@@ -235,15 +255,15 @@ h1 {
   gap: 10px;
   align-items: flex-start;
   padding: 10px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(70, 57, 8, 0.14);
 }
 
 .daily-proof button {
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
+  background: rgba(255, 255, 255, 0.64);
+  color: var(--ink);
   font-weight: 950;
 }
 
@@ -255,7 +275,7 @@ h1 {
 
 .daily-proof p {
   margin: 0;
-  color: #b8c5bf;
+  color: #665d31;
   font-size: 0.76rem;
   line-height: 1.4;
 }
@@ -278,6 +298,8 @@ h1 {
   padding: 18px;
   display: grid;
   align-content: center;
+  border-color: #efbcae;
+  background: var(--coral);
 }
 
 .now-card h2,
@@ -320,20 +342,20 @@ h1 {
 .primary {
   width: fit-content;
   padding: 0 16px;
-  background: var(--green);
-  color: #fff;
+  background: var(--ink);
+  color: var(--yellow);
 }
 
 .quiet-btn,
 .text-btn {
   padding: 0 12px;
-  background: #eef3f0;
+  background: var(--yellow-soft);
   color: var(--ink);
 }
 
 .icon-btn {
   width: 42px;
-  background: #e8f2ec;
+  background: var(--yellow);
   color: var(--green);
   font-size: 1.35rem;
 }
@@ -357,7 +379,7 @@ h1 {
   padding: 3px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #eef3f0;
+  background: var(--blue);
 }
 
 .career-mode button {
@@ -376,9 +398,9 @@ h1 {
 
 .career-hero {
   padding: 13px;
-  border: 1px solid #dce8e1;
+  border: 1px solid #b8d4f4;
   border-radius: 8px;
-  background: #f7faf8;
+  background: var(--blue);
 }
 
 .career-hero h2 {
@@ -405,7 +427,7 @@ h1 {
   padding: 10px;
   border: 1px solid #e8eeeb;
   border-radius: 8px;
-  background: #fbfdfc;
+  background: var(--mint);
 }
 
 .career-score span {
@@ -506,7 +528,7 @@ h1 {
   padding: 16px 14px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  background: #f7faf8;
+  background: var(--yellow-soft);
 }
 
 .lesson-topline,
@@ -596,6 +618,73 @@ h1 {
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 700;
+}
+
+.expand-section {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.expand-section > summary {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  padding: 13px 24px 13px 2px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.expand-section > summary::-webkit-details-marker,
+.inline-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.expand-section > summary::after,
+.inline-disclosure > summary::after {
+  content: "+";
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.expand-section[open] > summary::after,
+.inline-disclosure[open] > summary::after {
+  content: "-";
+}
+
+.expand-section > summary strong {
+  font-size: 0.94rem;
+}
+
+.expand-section > summary span {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.expand-section > :last-child {
+  margin-bottom: 12px;
+}
+
+.inline-disclosure {
+  margin-top: 8px;
+}
+
+.inline-disclosure > summary {
+  position: relative;
+  width: fit-content;
+  padding-right: 22px;
+  color: #66550f;
+  cursor: pointer;
+  font-size: 0.74rem;
+  font-weight: 900;
+  list-style: none;
+}
+
+.inline-disclosure > summary::after {
+  right: 3px;
 }
 
 #courseLinks {
@@ -772,6 +861,8 @@ h1 {
   display: grid;
   align-content: center;
   text-align: center;
+  border-color: #efc2b6;
+  background: var(--coral);
 }
 
 .rep-counter {
@@ -795,7 +886,7 @@ h1 {
   justify-self: center;
   border-radius: 999px;
   background: var(--ink);
-  color: #fff;
+  color: var(--yellow);
   font-weight: 950;
   box-shadow: 0 16px 34px rgba(23, 33, 29, 0.22);
 }
@@ -827,6 +918,8 @@ h1 {
   justify-items: center;
   gap: 8px;
   padding: 8px 0 10px;
+  border-radius: 8px;
+  background: var(--mint);
   text-align: center;
 }
 
@@ -858,7 +951,7 @@ h1 {
   padding: 10px 12px;
   border: 1px solid #dce8e1;
   border-radius: 8px;
-  background: #f7faf8;
+  background: #fff;
   text-align: left;
 }
 
@@ -935,7 +1028,7 @@ h1 {
   padding: 11px;
   border: 1px solid #e8eeeb;
   border-radius: 8px;
-  background: #fbfdfc;
+  background: var(--blue);
 }
 
 .read-stats strong {
@@ -1005,11 +1098,21 @@ h1 {
   padding: 12px;
   border: 1px solid #e8eeeb;
   border-radius: 8px;
-  background: #f8fbf9;
+  background: #fff;
 }
 
 .review-panel textarea {
   margin-top: 10px;
+}
+
+.review-panel {
+  border-color: #b8d4f4;
+  background: var(--blue);
+}
+
+.coach-panel {
+  border-color: #c9dfd2;
+  background: var(--mint);
 }
 
 .review-question {
@@ -1049,8 +1152,8 @@ h1 {
 }
 
 .bubble.assistant {
-  background: var(--ink);
-  color: #fff;
+  background: var(--yellow-soft);
+  color: var(--ink);
 }
 
 .bubble.user {
@@ -1079,7 +1182,7 @@ h1 {
   gap: 5px;
   padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(16px);
 }
 
@@ -1093,8 +1196,8 @@ h1 {
 }
 
 .tab.active {
-  background: var(--ink);
-  color: #fff;
+  background: var(--yellow);
+  color: var(--ink);
 }
 
 dialog {

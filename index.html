@@ -3,22 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#17211d" />
+    <meta name="theme-color" content="#ffd84d" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="人生系统" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>人生系统</title>
-    <link rel="manifest" href="./manifest.webmanifest?v=20260801-4" />
+    <link rel="manifest" href="./manifest.webmanifest?v=20260801-5" />
     <link rel="apple-touch-icon" href="./assets/icon-192.png" />
     <link rel="icon" href="./assets/icon-192.png" />
-    <link rel="stylesheet" href="./styles.css?v=20260801-4" />
+    <link rel="stylesheet" href="./styles.css?v=20260801-5" />
   </head>
   <body>
     <main class="app-shell">
       <header class="app-head">
-        <div>
-          <p class="eyebrow" id="dateLabel"></p>
-          <h1>人生系统</h1>
+        <div class="brand-lockup">
+          <img class="app-mark" src="./assets/icon-192.png" alt="" />
+          <div>
+            <p class="eyebrow" id="dateLabel"></p>
+            <h1>人生系统</h1>
+          </div>
         </div>
         <button class="quiet-btn" id="notifyBtn" type="button">系统提醒</button>
       </header>
@@ -37,12 +40,18 @@
               <section>
                 <span id="monthLabel">本月</span>
                 <strong id="monthTitle"></strong>
-                <ul id="monthMilestones"></ul>
+                <details class="inline-disclosure">
+                  <summary>查看本月交付</summary>
+                  <ul id="monthMilestones"></ul>
+                </details>
               </section>
               <section>
                 <span id="weekLabel">本周</span>
                 <strong id="weekTitle"></strong>
-                <ul id="weekMilestones"></ul>
+                <details class="inline-disclosure">
+                  <summary>查看本周重点</summary>
+                  <ul id="weekMilestones"></ul>
+                </details>
               </section>
             </div>
 
@@ -71,7 +80,13 @@
                 <button class="icon-btn" id="addTaskBtn" type="button" aria-label="添加目标">+</button>
               </div>
             </div>
-            <div class="goal-list" id="taskList"></div>
+            <details class="expand-section">
+              <summary>
+                <strong>展开今日完整日程</strong>
+                <span>当前任务已经显示在上方</span>
+              </summary>
+              <div class="goal-list" id="taskList"></div>
+            </details>
           </section>
         </article>
 
@@ -121,10 +136,13 @@
               <summary>全部课程入口 <span>需要时再展开</span></summary>
               <div id="courseLinks"></div>
             </details>
-            <div class="panel-head sub-head">
-              <h2>之后会学什么</h2>
-            </div>
-            <div class="career-roadmap" id="careerRoadmap"></div>
+            <details class="expand-section">
+              <summary>
+                <strong>之后会学什么</strong>
+                <span>需要全局视角时再看</span>
+              </summary>
+              <div class="career-roadmap" id="careerRoadmap"></div>
+            </details>
             <div class="career-coach">
               <p class="small-label">学习中卡住就问</p>
               <textarea id="careerQuestion" rows="4" placeholder="比如：AI时代我还有必要手搓C语言吗？我今天ROS2环境卡住了怎么办？"></textarea>
@@ -197,12 +215,24 @@
                 <span id="readSessions">0 次</span>
               </div>
             </section>
-            <div class="recent-reads" id="recentReads"></div>
-            <div class="panel-head sub-head">
-              <h2>今日随机</h2>
-              <button class="text-btn" id="shufflePrinciplesBtn" type="button">换一组</button>
-            </div>
-            <div class="principle-list" id="principleList"></div>
+            <details class="expand-section">
+              <summary>
+                <strong>朗读记录</strong>
+                <span>查看最近练习</span>
+              </summary>
+              <div class="recent-reads" id="recentReads"></div>
+            </details>
+            <details class="expand-section">
+              <summary>
+                <strong>选择其他原则</strong>
+                <span>今日随机原则与我的原则</span>
+              </summary>
+              <div class="panel-head sub-head">
+                <h2>今日随机</h2>
+                <button class="text-btn" id="shufflePrinciplesBtn" type="button">换一组</button>
+              </div>
+              <div class="principle-list" id="principleList"></div>
+            </details>
           </section>
         </article>
 
@@ -390,7 +420,7 @@
       </form>
     </dialog>
 
-    <script src="./ray-dalio-principles.js?v=20260801-4" defer></script>
-    <script src="./app.js?v=20260801-4" defer></script>
+    <script src="./ray-dalio-principles.js?v=20260801-5" defer></script>
+    <script src="./app.js?v=20260801-5" defer></script>
   </body>
 </html>
