@@ -7,23 +7,26 @@ const REVIEW_KEY = "life-system-nightly-review-v1";
 const CAREER_KEY = "life-system-career-v1";
 const CALENDAR_KEY = "life-system-calendar-v1";
 const GOAL_PROGRESS_KEY = "life-system-one-goal-v1";
-const ROUTINE_VERSION = 10;
+const ROUTINE_VERSION = 11;
 const EVERYDAY = [0, 1, 2, 3, 4, 5, 6];
 const WEEKDAYS = [1, 2, 3, 4, 5];
 
 const defaultTasks = [
   ["morning-start", "07:00", "个人成长", "起床/洗漱", "10min", EVERYDAY, "每天", "7 点起床，洗脸、喝水、把手机放远。今天的主线是实习，不要一睁眼就把注意力交出去。"],
   ["eng-morning", "07:10", "英语精进", "原著阅读", "30min", EVERYDAY, "每天", "英语只维持手感：原著阅读 30 分钟。读慢一点，圈出生词，不在英语上吞掉求职主线。"],
-  ["career-skill-am", "08:00", "职业核心", "就业硬技能", "2h", EVERYDAY, "每天", "上午主工作区：具身智能硬技能。连续推进到 10:00，围绕 Linux、Python、ROS2、C/C++、项目代码或岗位 JD 补短板，必须留下笔记或提交。"],
-  ["tutor-am-prep", "10:00", "财务/副业", "出门/家教准备", "30min", EVERYDAY, "每天", "停止学习，整理教材、喝水、出门。10:30 准时开始家教，不用最后十分钟慌张切换。"],
-  ["tutor-am-window", "10:30", "财务/副业", "上午家教", "2h", EVERYDAY, "每天", "固定家教 10:30-12:30。认真上课，结束后立刻回家，不在路上刷短视频。"],
-  ["growth-gym", "12:45", "个人成长", "午饭/健身", "1h15min", EVERYDAY, "每天", "12:30 下课后尽快回家，12:45 吃午饭，13:15-14:00 做紧凑训练。时间短就提高训练密度，不在组间刷手机。"],
-  ["growth-reset", "14:00", "个人成长", "收拾/出门上课", "30min", EVERYDAY, "每天", "结束训练，简单洗漱、整理教材并出门，14:30 准时开始下午家教。"],
-  ["tutor-pm-window", "14:30", "财务/副业", "下午家教", "2h", EVERYDAY, "每天", "固定家教 14:30-16:30。上课结束后回家，直接接回职业主线。"],
-  ["career-skill-pm", "16:50", "职业核心", "就业硬技能", "1h10min", EVERYDAY, "每天", "下午补一段专业硬技能：把上午没跑通的环境、代码、概念或项目模块继续推进到一个可见结果。"],
+  ["morning-plan", "07:40", "个人成长", "早餐/今日计划", "20min", EVERYDAY, "每天", "吃早餐，只确认今天唯一的职业交付、两到三份目标岗位和第一个动作。不要先打开信息流。"],
+  ["career-skill-am", "08:00", "职业核心", "项目深度工作一", "2h30min", EVERYDAY, "每天", "一天最清醒的时间只做最难的职业任务：具身智能项目、Linux、Python、ROS2或C/C++。10:30前必须留下代码提交、运行结果或文档。"],
+  ["career-break-am", "10:30", "个人成长", "离屏恢复", "15min", EVERYDAY, "每天", "离开屏幕，喝水、走动、看远处。不要用短视频把下一段注意力打碎。"],
+  ["career-job-am", "10:45", "职业核心", "求职推进一", "1h15min", EVERYDAY, "每天", "分析岗位、定向修改简历并完成第一批有效投递。每次投递都写清匹配点，不进行无差别海投。"],
+  ["growth-lunch", "12:00", "个人成长", "午饭", "30min", EVERYDAY, "每天", "正常吃午饭、补水，暂时离开职业问题。12:30去训练，不躺到手机里。"],
+  ["growth-gym", "12:30", "个人成长", "力量训练/体能", "1h", EVERYDAY, "每天", "完成计划内训练并记录重量、组数和次数。训练日做力量，恢复日做步行、足球、灵活性或体态。"],
+  ["growth-reset", "13:30", "个人成长", "洗澡/午间恢复", "30min", EVERYDAY, "每天", "洗澡、简单整理、闭眼休息或散步。14点准时回到第二段深度工作。"],
+  ["career-skill-pm", "14:00", "职业核心", "项目深度工作二", "2h30min", EVERYDAY, "每天", "继续上午的主交付，解决一个真实卡点并推进到可演示状态。禁止用看课代替动手，结束前更新进度。"],
+  ["career-break-pm", "16:30", "个人成长", "离屏恢复", "15min", EVERYDAY, "每天", "离屏走动、吃少量水果或补水，让眼睛和大脑降下来。"],
+  ["career-interview", "16:45", "职业核心", "岗位研究/面试表达", "1h15min", EVERYDAY, "每天", "跟进岗位、拆JD、修简历或练项目讲解。每天口述15分钟，每周至少完成一次完整模拟面试。"],
   ["dinner-reset", "18:00", "个人成长", "晚饭/恢复", "30min", EVERYDAY, "每天", "简单吃饭、补水、离开屏幕。晚上的 18:30-22:00 是今天最重要的职业冲刺，不要提前把脑子耗掉。"],
-  ["career-skill-night", "18:30", "职业核心", "就业硬技能", "2h", EVERYDAY, "每天", "晚上深度工作区：做具身智能项目、整理 README、跑 ROS2 demo、补 C/C++/通信协议。目标是制造能写进简历的证据。"],
-  ["career-job-plan", "20:30", "职业核心", "求职规划", "1h", EVERYDAY, "每天", "投递、改简历、看岗位、准备面试表达。每天完成 2-3 次有效投递并更新投递表，周目标不少于 15 次。"],
+  ["career-skill-night", "18:30", "职业核心", "项目交付/作品包装", "2h", EVERYDAY, "每天", "把白天成果整理成别人能看懂的证据：代码、README、测试、演示视频或项目说明。晚上不再开启没有边界的新课。"],
+  ["career-job-plan", "20:30", "职业核心", "求职推进二", "1h", EVERYDAY, "每天", "完成剩余投递、回复、跟进和投递表更新。每天总计2-3次有效投递，周目标不少于15次。"],
   ["growth-upward", "21:30", "个人成长", "上行部落/阅读", "40min", EVERYDAY, "每天", "上行部落或高质量阅读 40 分钟。只要一个输出：一句观点、一条行动、一个明天能用的判断。"],
   ["night-shutdown", "22:10", "个人成长", "洗澡/晚间复盘", "20min", EVERYDAY, "每天", "洗澡，做简短复盘：今天投递了多少、项目推进了什么、卡在哪里、明天第一步是什么。"],
   ["eng-night", "22:30", "英语精进", "原著阅读/口语输出", "45min", EVERYDAY, "每天", "睡前英语输入 30 分钟，再用英语口述 15 分钟。今天至少留下一个口语录音或复述结果。"],
@@ -54,6 +57,7 @@ const legacyDefaultTaskKeys = new Set([
   "职业核心:求职规划",
   "职业核心:求职规划/职业补时",
   "财务/副业:家教/副业执行",
+  "财务/副业:出门/家教准备",
   "财务/副业:副业执行/家教收尾",
   "财务/副业:晚间家教/副业执行",
   "财务/副业:家教窗口 / AI 技能实操",
@@ -234,7 +238,7 @@ const monthlyPlans = [
 ];
 
 const weeklyMinimums = [
-  "项目或岗位技能15小时，并留下一个可检查进度",
+  "职业主线至少40小时，其中项目或岗位技能不少于30小时",
   "有效投递15次；项目讲解或模拟面试1次",
   "英语输入7小时，并持续口语输出",
   "力量训练4次、足球或体能1次、体态训练3次",
@@ -511,7 +515,7 @@ function updateServiceWorker() {
     window.location.reload();
   });
   navigator.serviceWorker
-    .register("./sw.js?v=20260801-1", { updateViaCache: "none" })
+    .register("./sw.js?v=20260801-2", { updateViaCache: "none" })
     .then((registration) => registration.update())
     .catch(() => {});
 }
@@ -704,7 +708,7 @@ function dailyEvidence(date = new Date()) {
 
   return [
     { id: "sprint", title: "本周节点", text: sprintItem },
-    { id: "career-proof", title: "职业证据", text: "完成至少3小时项目或岗位技能工作，并留下Git提交、文档、演示或面试答案。" },
+    { id: "career-proof", title: "职业证据", text: "完成至少6小时项目或岗位技能工作，并留下Git提交、文档、演示或面试答案。" },
     { id: "applications", title: applicationTask[0], text: applicationTask[1] },
     { id: "english", title: "英语输入与输出", text: "完成45分钟高质量输入和15分钟口语输出，留下复述或录音。" },
     { id: "body", title: "身体记录", text: "训练日记录重量、组数和次数；休息日记录体重并完成10分钟体态训练。" },
