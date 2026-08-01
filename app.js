@@ -685,7 +685,7 @@ function updateServiceWorker() {
     window.location.reload();
   });
   navigator.serviceWorker
-    .register("./sw.js?v=20260801-3", { updateViaCache: "none" })
+    .register("./sw.js?v=20260801-4", { updateViaCache: "none" })
     .then((registration) => registration.update())
     .catch(() => {});
 }
