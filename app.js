@@ -1037,23 +1037,24 @@ function careerTasksForToday() {
     const workDays = config.days === "everyday" ? EVERYDAY : config.days === "six-days" ? [1, 2, 3, 4, 5, 6] : WEEKDAYS;
     if (!workDays.includes(new Date().getDay())) {
       return [
-        ["整理本周实习证据", "写清本周完成的任务、遇到的问题、解决过程和结果，不记录公司机密。"],
-        ["推进长期技能或个人项目", "只推进一个明确模块，留下代码、文档或运行结果。"],
-        ["准备下周", "确认下周最重要的公司任务、一个知识缺口和一条可以更新的简历素材。"]
+        ["整理本周实习证据", "写清本周完成的任务、遇到的问题、解决过程和结果，不记录公司机密。", { label: "在手机备忘录或自己的周报文件里完成" }],
+        ["推进长期技能或个人项目", "只推进一个明确模块，留下代码、文档或运行结果。", { label: "在Mac的 career-learning 文件夹里完成" }],
+        ["准备下周", "确认下周最重要的公司任务、一个知识缺口和一条可以更新的简历素材。", { label: "在手机日历或备忘录里写下" }]
       ];
     }
     return [
-      ["先把公司的任务做完", "先确认导师今天要的结果、截止时间和验收方式。工作时间不偷偷学一堆无关课程。"],
-      ["记录一个问题闭环", "写下现象、如何复现、看了什么信息、怎么解决、最后如何确认。不能带走公司代码和机密。"],
-      ["只补今天遇到的知识", "下班后用45分钟补一个真实知识缺口，并把它写成以后面试能讲的案例。"]
+      ["先把公司的任务做完", "先确认导师今天要的结果、截止时间和验收方式。工作时间不偷偷学一堆无关课程。", { label: "在公司的任务系统或导师指定位置完成" }],
+      ["记录一个问题闭环", "写下现象、如何复现、看了什么信息、怎么解决、最后如何确认。不能带走公司代码和机密。", { label: "在自己的非涉密问题日志里完成" }],
+      ["只补今天遇到的知识", "下班后用45分钟补一个真实知识缺口，并把它写成以后面试能讲的案例。", { label: "先在应用对话里问清课程入口" }]
     ];
   }
 
   const lesson = currentBeginnerLesson();
+  const resource = courseResources.find((item) => item.id === lesson.resource);
   return [
-    ["简历和投递", "简历没完成就只完成一个模块；简历已可投就投2-3个真实岗位，并记录公司、岗位和下一步。"],
-    [lesson.title, lesson.steps.join("；")],
-    ["保存今天的完成证据", lesson.proof]
+    ["简历和投递", "在Mac的WPS或Word里打开当前简历。没完成就只补一个模块；已经能投就投2-3个真实岗位，并记录公司、岗位和下一步。", { label: "去BOSS直聘搜索入口岗位", url: "https://www.zhipin.com/zhaopin/" }],
+    [lesson.title, lesson.steps.join("；"), { label: `打开：${resource.title}`, url: resource.url }],
+    ["保存今天的完成证据", lesson.proof, { label: "保存位置：Mac的 career-learning 文件夹" }]
   ];
 }
 
@@ -1083,7 +1084,7 @@ function renderCareer() {
   const tasks = careerTasksForToday();
   backlogToday.forEach((item) => tasks.unshift(["顺延任务", `${item.text}（${item.from || "复盘顺延"}）`]));
   els.careerTodayList.replaceChildren(
-    ...tasks.map(([title, text], index) => {
+    ...tasks.map(([title, text, action], index) => {
       const key = `${todayKey()}-${index}-${title}`;
       const row = document.createElement("article");
       row.className = `career-task${careerState.done?.[key] ? " done" : ""}`;
@@ -1096,6 +1097,17 @@ function renderCareer() {
       `;
       row.querySelector("strong").textContent = title;
       row.querySelector("p").textContent = text;
+      if (action) {
+        const destination = document.createElement(action.url ? "a" : "span");
+        destination.className = "career-task-place";
+        destination.textContent = action.label;
+        if (action.url) {
+          destination.href = action.url;
+          destination.target = "_blank";
+          destination.rel = "noreferrer";
+        }
+        row.querySelector("div").append(destination);
+      }
       row.querySelector("button").addEventListener("click", () => {
         careerState.done = careerState.done || {};
         careerState.done[key] = !careerState.done[key];

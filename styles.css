@@ -468,6 +468,20 @@ h1 {
   line-height: 1.42;
 }
 
+.career-task-place {
+  display: block;
+  width: fit-content;
+  margin-top: 7px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #eef3f0;
+  color: var(--green);
+  font-size: 0.76rem;
+  font-weight: 900;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
 .roadmap-row span {
   min-width: 70px;
   padding: 4px 7px;
